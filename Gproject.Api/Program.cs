@@ -4,8 +4,7 @@ using GProject.Application;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddApplication();
-builder.Services.AddInfrastruct();
+builder.Services.AddApplication().AddInfrastruct();
 builder.Services.AddControllers();
 
 
