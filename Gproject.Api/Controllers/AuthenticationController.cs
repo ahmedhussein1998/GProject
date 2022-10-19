@@ -1,5 +1,5 @@
 ﻿using Gproject.contracts.Authentication;
-using GProject.Application.Services.Authentication;
+using GProject.Application.Service.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gproject.Api.Controllers

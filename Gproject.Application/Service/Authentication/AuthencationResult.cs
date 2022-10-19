@@ -1,4 +1,4 @@
-namespace GProject.Application.Services.Authentication;
+namespace GProject.Application.Service.Authentication;
 public record AuthecationResult(
     Guid Id,
     string FirstName,
