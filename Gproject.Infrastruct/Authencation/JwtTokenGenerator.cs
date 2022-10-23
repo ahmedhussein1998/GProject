@@ -1,5 +1,6 @@
 ﻿using Gproject.Application.Common.Interfaces.Authentication;
 using Gproject.Application.Common.Interfaces.Services;
+using Gproject.Domain.Entities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -17,16 +18,16 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         _dateTimeProvider = dateTimeProvider;
         _jwtSettings = jwtSettings.Value;
     }
-    public string GenerateToken(Guid userId, string fristName, string lastName)
+    public string GenerateToken(User user)
     {
         var signingCredintial = new SigningCredentials(
                                     new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret)),
                                     SecurityAlgorithms.HmacSha256);
         var claims = new[]
         {
-           new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
-           new Claim(JwtRegisteredClaimNames.GivenName, fristName),
-           new Claim(JwtRegisteredClaimNames.FamilyName, lastName),
+           new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+           new Claim(JwtRegisteredClaimNames.GivenName, user.FristName),
+           new Claim(JwtRegisteredClaimNames.FamilyName, user.LastName),
            new Claim(JwtRegisteredClaimNames.Jti ,Guid.NewGuid().ToString()),
         };
 

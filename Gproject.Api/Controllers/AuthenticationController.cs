@@ -18,10 +18,10 @@ namespace Gproject.Api.Controllers
         {
             var authResult = _Service.Register(request.FirstName, request.LastName, request.Email, request.Password);
             var response = new AuthenticationResponse(
-               authResult.Id,
-               authResult.FirstName,
-               authResult.Email,
-               authResult.Email,
+               authResult.user.Id,
+               authResult.user.FristName,
+               authResult.user.Email,
+               authResult.user.Email,
                authResult.Token
             );
             return Ok(response);
@@ -31,10 +31,10 @@ namespace Gproject.Api.Controllers
         {
             var authResult = _Service.Login(request.Email, request.Password);
             var response = new AuthenticationResponse(
-               authResult.Id,
-               authResult.FirstName,
-               authResult.Email,
-               authResult.Email,
+               authResult.user.Id,
+               authResult.user.FristName,
+               authResult.user.LastName,
+               authResult.user.Email,
                authResult.Token
             );
             return Ok(response);
