@@ -31,7 +31,7 @@ public class AuthencationService : IAuthencationService
         };
         _userRepositroy.AddUser(user);
         //3. Create Jwt Token
-        Guid userId = Guid.NewGuid();
+
         var Token = _JwtTokenGenerator.GenerateToken(user);
 
         return new AuthecationResult(user, Token);

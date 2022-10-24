@@ -1,4 +1,5 @@
-﻿using Gproject.contracts.Authentication;
+﻿using Gproject.Api.Filters;
+using Gproject.contracts.Authentication;
 using GProject.Application.Service.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,6 +7,7 @@ namespace Gproject.Api.Controllers
 {
     [ApiController]
     [Route("auth")]
+   // [ErrorHandlingFilter]
     public class AuthenticationController : ControllerBase
     {
         private readonly IAuthencationService _Service;
