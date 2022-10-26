@@ -14,7 +14,7 @@ builder.Services.AddApplication().AddInfrastruct(builder.Configuration);
 //builder.Services.AddControllers(options => options.Filters.Add<ErrorHandlingFilterAttribute>());
 builder.Services.AddControllers();
 
-//builder.Services.AddSingleton<ProblemDetailsFactory, GProjectProblemDetailsFactory>();
+builder.Services.AddSingleton<ProblemDetailsFactory, GProjectProblemDetailsFactory>();
 //// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 //builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddSwaggerGen();
@@ -22,11 +22,12 @@ builder.Services.AddControllers();
 var app = builder.Build();
 {
     // app.UseMiddleware<ErrorHandlingMiddelware>();
-    app.Map("/error", (HttpContext httpContext) => {
-        Exception? exception = httpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
-        return Results.Problem();
-    });
+    //app.Map("/error", (HttpContext httpContext) => {
+    //    Exception? exception = httpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
+    //    return Results.Problem();
+    //});
     app.UseExceptionHandler("/error");
+
     app.UseHttpsRedirection();
     app.MapControllers();
     app.Run();

@@ -11,7 +11,12 @@ namespace Gproject.Api.Controllers
         public IActionResult Error()
         {
             Exception? exception = HttpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
-            return Problem(title:exception?.Message);
+            var (statusCode, message) = exception switch
+            {
+                _ => (StatusCodes.Status500InternalServerError,"An inexpexted error occurred. ")
+            };
+
+            return Problem(statusCode:statusCode,title:message);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ErrorOr;
+using Gproject.Api.Common.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Options;
@@ -93,7 +95,12 @@ namespace Gproject.Api.Errors
             {
                 problemDetails.Extensions["traceId"] = traceId;
             }
-            problemDetails.Extensions.Add("CustomerProp", "customerprop");
+            var errors = httpContext?.Items[HttpContextitemKeys.Errors] as List<Error>;
+            if (errors is not null)
+            {
+                problemDetails.Extensions.Add("ErrorCode", errors.Select(e => e.Code));
+            }
+
 
             //_configure?.Invoke(new() { HttpContext = httpContext!, ProblemDetails = problemDetails });
         }
