@@ -1,5 +1,7 @@
+using ErrorOr;
 using Gproject.Application.Common.Interfaces.Authentication;
 using Gproject.Application.Common.Interfaces.Persistance;
+using Gproject.Domain.Common.Errors;
 using Gproject.Domain.Entities;
 
 namespace GProject.Application.Service.Authentication;
@@ -14,12 +16,12 @@ public class AuthencationService : IAuthencationService
         _JwtTokenGenerator = JwtTokenGenerator;
         _userRepositroy = UserRepositroy;
     }
-    public AuthecationResult Register(string FirstName, string LastName, string Email, string Password)
+    public ErrorOr<AuthecationResult> Register(string FirstName, string LastName, string Email, string Password)
     {
         //1. Check If User Already Exists
         if (_userRepositroy.GetUserByEmail(Email) != null)
         {
-            throw new Exception("User Aleady Exists!");
+            return Errors.User.DuplicateEmail;
         }
         //2. Create User (Generate Unique ID) & Persist To DB
         var user = new User
@@ -37,17 +39,17 @@ public class AuthencationService : IAuthencationService
         return new AuthecationResult(user, Token);
     }
 
-    public AuthecationResult Login(string email, string Password)
+    public ErrorOr<AuthecationResult> Login(string email, string Password)
     {
         //1. Validata User Dose Exist
         if (_userRepositroy.GetUserByEmail(email) is not User user)
         {
-            throw new Exception("User Dose Not Exits");
+            return Errors.Authentication.InvalidCredential;
         }
         //2. Password Is Correct
         if (user.Password != Password)
         {
-            throw new Exception("Password Is Wrong");
+            return Errors.Authentication.InvalidCredential;
         }
         //3. Create JWT Token
         var Token = _JwtTokenGenerator.GenerateToken(user);
