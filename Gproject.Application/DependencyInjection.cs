@@ -1,4 +1,4 @@
-using GProject.Application.Service.Authentication;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GProject.Application;
@@ -7,7 +7,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplication(this IServiceCollection service)
     {
-        service.AddScoped<IAuthencationService,AuthencationService>();
+        service.AddMediatR(typeof(DependencyInjection).Assembly);
         return service;
     }
 
