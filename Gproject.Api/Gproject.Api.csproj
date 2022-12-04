@@ -7,6 +7,11 @@
     <UserSecretsId>b6e496fd-5c0d-4e93-9f67-9fea9821315c</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Mapster" Version="7.3.0" />
+    <PackageReference Include="Mapster.DependencyInjection" Version="1.0.0" />
+  </ItemGroup>
+
 
 
   <ItemGroup>
