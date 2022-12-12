@@ -21,8 +21,8 @@ public class JwtTokenGenerator : IJwtTokenGenerator
     public string GenerateToken(User user)
     {
         var signingCredintial = new SigningCredentials(
-                                    new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret)),
-                                    SecurityAlgorithms.HmacSha256);
+                                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret)),
+                                SecurityAlgorithms.HmacSha256);
         var claims = new[]
         {
            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),

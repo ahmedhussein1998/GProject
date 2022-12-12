@@ -1,6 +1,11 @@
 ﻿using ErrorOr;
+using Gproject.Application.Authentication.Commands.Register;
+using Gproject.Application.Authentication.Common;
+using Gproject.Application.Authentication.Queries.Login;
 using Gproject.contracts.Authentication;
-using GProject.Application.Service.Authentication;
+using Mapster;
+using MapsterMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gproject.Api.Controllers
@@ -9,45 +14,42 @@ namespace Gproject.Api.Controllers
     [Route("auth")]
     public class AuthenticationController : ApiController
     {
-        private readonly IAuthencationService _Service;
-        public AuthenticationController(IAuthencationService service)
+        //private readonly IAuthencationCommandService _commandservice;
+        //private readonly IAuthencationQueriesService _queriesService;
+        private readonly ISender _mediator;
+        private readonly IMapper _mapper;
+
+        public AuthenticationController(IMediator mediator, IMapper mapper)
         {
-            _Service = service;
+            //_commandservice = commandservice;
+            //_queriesService = queriesService;
+            _mediator = mediator;
+            _mapper = mapper;
         }
         [HttpPost("Register")]
-        public IActionResult Register(RegisterRequest request)
+        public async Task<IActionResult> Register(RegisterRequest request)
         {
-            ErrorOr<AuthecationResult> authResult = _Service.Register(request.FirstName, request.LastName, request.Email, request.Password);
+            var command = _mapper.Map<RegisterCommand>(request);
+            ErrorOr<AuthenticationResult> authResult = await _mediator.Send(command);
 
             return authResult.Match(
-                authResult => Ok(MapAuthResult(authResult)),
+                authResult => Ok(_mapper.Map<AuthenticationResponse>(authResult)),
                errors => Problem(errors));
         }
 
 
         [HttpPost("Login")]
-        public IActionResult Login(LoginRequest request)
+        public async Task<IActionResult> Login(LoginRequest request)
         {
-            var authResult = _Service.Login(request.Email, request.Password);
+            var loginQuery = _mapper.Map<LoginQuery>(request);
+            var authResult =await _mediator.Send(loginQuery);
 
             return authResult.Match(
-                authResult => Ok(MapAuthResult(authResult)),
+                authResult => Ok(_mapper.Map<AuthenticationResponse>(authResult)),
                 errors => Problem(errors)
                 );
            
         }
-
-        private static AuthenticationResponse MapAuthResult(AuthecationResult authResult)
-        {
-            return new AuthenticationResponse(
-               authResult.user.Id,
-               authResult.user.FristName,
-               authResult.user.LastName,
-               authResult.user.Email,
-               authResult.Token
-            );
-        }
-
 
     }
 }
