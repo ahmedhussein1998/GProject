@@ -28,7 +28,7 @@ namespace Gproject.Api.Controllers
         }
         [HttpPost("Register")]
         public async Task<IActionResult> Register(RegisterRequest request)
-        {
+       {
             var command = _mapper.Map<RegisterCommand>(request);
             ErrorOr<AuthenticationResult> authResult = await _mediator.Send(command);
 
