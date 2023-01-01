@@ -1,3 +1,5 @@
+using Gproject.Api;
+using Gproject.Api.Common.Mapping;
 using Gproject.Api.Errors;
 using Gproject.Api.Filter;
 using Gproject.Api.Midleware;
@@ -9,15 +11,12 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddApplication().AddInfrastruct(builder.Configuration);
+builder.Services.AddPresentation().AddApplication().AddInfrastruct(builder.Configuration);
 
 //builder.Services.AddControllers(options => options.Filters.Add<ErrorHandlingFilterAttribute>());
-builder.Services.AddControllers();
-
-builder.Services.AddSingleton<ProblemDetailsFactory, GProjectProblemDetailsFactory>();
 //// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 {
@@ -26,7 +25,7 @@ var app = builder.Build();
     //    Exception? exception = httpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
     //    return Results.Problem();
     //});
-    //app.UseExceptionHandler("/error");
+    app.UseExceptionHandler("/error");
 
     app.UseHttpsRedirection();
     app.MapControllers();
@@ -34,11 +33,11 @@ var app = builder.Build();
 }
 
 //// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//}
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 
 //app.UseAuthorization();

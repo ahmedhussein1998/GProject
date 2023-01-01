@@ -19,6 +19,7 @@ namespace Gproject.Application.Authentication.Queries.Login
         }
         public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQuery query, CancellationToken cancellationToken)
         {
+            await Task.CompletedTask;
             //1. Validata User Dose Exist
             if (_userRepositroy.GetUserByEmail(query.Email) is not User user)
             {

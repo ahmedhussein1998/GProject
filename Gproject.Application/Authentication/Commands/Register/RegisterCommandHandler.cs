@@ -20,6 +20,7 @@ namespace Gproject.Application.Authentication.Commands.Register
 
         public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterCommand command, CancellationToken cancellationToken)
         {
+            await Task.CompletedTask;
             //1. Check If User Already Exists
             if (_userRepositroy.GetUserByEmail(command.Email) != null)
             {
@@ -33,7 +34,7 @@ namespace Gproject.Application.Authentication.Commands.Register
                 Email = command.Email,
                 Password = command.Password
             };
-            _userRepositroy.AddUser(user);
+             _userRepositroy.AddUser(user);
             //3. Create Jwt Token
             Guid userId = Guid.NewGuid();
             var Token = _JwtTokenGenerator.GenerateToken(user);
