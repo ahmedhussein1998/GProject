@@ -23,19 +23,18 @@ namespace Gproject.Domain.Menu
         public IReadOnlyList<MenuReviewId> MenuReviewIds => _menuReviewIds;
         public DateTime CreatededDateTime { get; }
         public DateTime UpdatedDateTime { get; }
-        public Menu(MenuId menuId, string name, string description, float averageRating,
+        public Menu(MenuId menuId, string name, string description,
             HostId hostId, DateTime creatededDateTime, DateTime updatedDateTime) : base(menuId)
         {
             Name= name; 
             Description= description;   
-            AverageRating= averageRating;
             HostId= hostId;
             CreatededDateTime= creatededDateTime;                
             UpdatedDateTime= updatedDateTime;
         }
-        public static Menu Create(string name, string description, float averageRating)
+        public static Menu Create(string name, string description, HostId hostId)
         {
-            return new(MenuId.CreateUnique(), name, description, averageRating);
+            return new(MenuId.CreateUnique(), name, description, hostId, DateTime.UtcNow, DateTime.UtcNow);
         }
     }
 }
