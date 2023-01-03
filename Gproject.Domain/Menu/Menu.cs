@@ -33,5 +33,9 @@ namespace Gproject.Domain.Menu
             CreatededDateTime= creatededDateTime;                
             UpdatedDateTime= updatedDateTime;
         }
+        public static Menu Create(string name, string description, float averageRating)
+        {
+            return new(MenuId.CreateUnique(), name, description, averageRating);
+        }
     }
 }
