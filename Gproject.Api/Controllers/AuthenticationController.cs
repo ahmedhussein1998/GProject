@@ -6,12 +6,14 @@ using Gproject.contracts.Authentication;
 using Mapster;
 using MapsterMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gproject.Api.Controllers
 {
 
     [Route("auth")]
+    [AllowAnonymous]
     public class AuthenticationController : ApiController
     {
         //private readonly IAuthencationCommandService _commandservice;
