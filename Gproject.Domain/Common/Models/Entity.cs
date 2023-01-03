@@ -32,5 +32,10 @@ namespace Gproject.Domain.Common.Models
             return Equals((object?)other);
         }
 
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
+
     }
 }

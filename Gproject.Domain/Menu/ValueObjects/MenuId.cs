@@ -22,7 +22,6 @@ namespace Gproject.Domain.Menu.ValueObjects
         public override IEnumerable<object> GetEqualityComponents()
         {
             yield return Value;
-
         }
     }
 }

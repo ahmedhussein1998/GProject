@@ -15,7 +15,7 @@ namespace Gproject.Domain.Menu.ValueObjects
             Value = value;
         }
 
-        public static MenuItemId New()
+        public static MenuItemId CreateUnique()
         {
             return new(Guid.NewGuid());
         }

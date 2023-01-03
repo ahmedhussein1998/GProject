@@ -18,11 +18,11 @@ namespace Gproject.Domain.Menu.Entities
         private MenuSection(MenuSectionId menuSectionId, string name, string description) : base(menuSectionId)
         {
             Name= name;
-            Description= menuSectionId;
+            Description= description;
         }
         public static MenuSection Create(string name, string description)
         {
-            return new(MenuSectionId.CreateUnique(), name, )
+            return new(MenuSectionId.CreateUnique(), name, description);
         }
     }
 }

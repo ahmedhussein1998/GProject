@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace Gproject.Domain.Common.Models
 {
-    internal class AggregateRoot
+    public abstract class AggregateRoot<TId> : Entity<TId> where TId : notnull
     {
+        protected AggregateRoot(TId id) :base(id)
+        {
+            
+        }   
     }
+
 }
