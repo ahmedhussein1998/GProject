@@ -8,7 +8,6 @@ using System.Collections.Generic;
 
 namespace Gproject.Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     [Authorize]
     public class ApiController : ControllerBase

@@ -1,27 +1,33 @@
 ﻿using Gproject.Domain.Common.Models;
+using Gproject.Domain.MenuAggregate.ValueObjects;
+using Gproject.Domain.MenuAggregate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gproject.Domain.MenuReview.ValueObjects
+namespace Gproject.Domain.HostAggregate.ValueObjects
 {
-    public sealed class MenuReviewId : ValueObject
+    public sealed class HostId : ValueObject
     {
         public Guid Value { get; }
-        private MenuReviewId(Guid value)
+        private HostId(Guid value)
         {
             Value = value;
         }
 
-        public static MenuReviewId CreateUnique()
+        public static HostId CreateUnique()
         {
             return new(Guid.NewGuid());
         }
         public override IEnumerable<object> GetEqualityComponents()
         {
             yield return Value;
+        }
+        public static HostId Create(string hostId)
+        {
+            return HostId.CreateUnique();
         }
     }
 }

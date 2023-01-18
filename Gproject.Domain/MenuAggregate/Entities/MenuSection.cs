@@ -1,12 +1,12 @@
 ﻿using Gproject.Domain.Common.Models;
-using Gproject.Domain.Menu.ValueObjects;
+using Gproject.Domain.MenuAggregate.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gproject.Domain.Menu.Entities
+namespace Gproject.Domain.MenuAggregate.Entities
 {
     public sealed class MenuSection : Entity<MenuSectionId>
     {
@@ -15,14 +15,15 @@ namespace Gproject.Domain.Menu.Entities
         public string Description { get; }
 
         public IReadOnlyList<MenuItem> Items =>_items.ToList();
-        private MenuSection(MenuSectionId menuSectionId, string name, string description) : base(menuSectionId)
+        private MenuSection(MenuSectionId menuSectionId, string name, string description, List<MenuItem> item) : base(menuSectionId)
         {
             Name= name;
             Description= description;
+            _items = item;
         }
-        public static MenuSection Create(string name, string description)
+        public static MenuSection Create(string name, string description, List<MenuItem> item)
         {
-            return new(MenuSectionId.CreateUnique(), name, description);
+            return new(MenuSectionId.CreateUnique(), name, description, item);
         }
     }
 }

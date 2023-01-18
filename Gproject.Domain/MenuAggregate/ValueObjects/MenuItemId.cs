@@ -5,17 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gproject.Domain.Host.ValueObjects
+namespace Gproject.Domain.MenuAggregate.ValueObjects
 {
-    public sealed class HostId : ValueObject
+    public sealed class MenuItemId : ValueObject
     {
         public Guid Value { get; }
-        private HostId(Guid value)
+        private MenuItemId(Guid value)
         {
             Value = value;
         }
 
-        public static HostId CreateUnique()
+        public static MenuItemId CreateUnique()
         {
             return new(Guid.NewGuid());
         }

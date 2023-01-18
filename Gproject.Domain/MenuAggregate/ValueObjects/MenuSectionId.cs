@@ -5,19 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gproject.Domain.Menu.ValueObjects
+namespace Gproject.Domain.MenuAggregate.ValueObjects
 {
-    public sealed class MenuItemId : ValueObject
+    public sealed class MenuSectionId : ValueObject
     {
         public Guid Value { get; }
-        private MenuItemId(Guid value)
+        private MenuSectionId(Guid value)
         {
             Value = value;
         }
 
-        public static MenuItemId CreateUnique()
+        public static MenuSectionId CreateUnique()
         {
-            return new(Guid.NewGuid());
+            return new (Guid.NewGuid());
         }
         public override IEnumerable<object> GetEqualityComponents()
         {

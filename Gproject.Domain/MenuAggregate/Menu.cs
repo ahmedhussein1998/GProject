@@ -1,12 +1,13 @@
 ﻿using Gproject.Domain.Common.Models;
-using Gproject.Domain.Dinner.ValueObjects;
-using Gproject.Domain.Host.ValueObjects;
-using Gproject.Domain.Menu.Entities;
-using Gproject.Domain.Menu.ValueObjects;
-using Gproject.Domain.MenuReview.ValueObjects;
+using Gproject.Domain.DinnerAggregate.ValueObjects;
+using Gproject.Domain.HostAggregate.ValueObjects;
+using Gproject.Domain.MenuAggregate.Entities;
+using Gproject.Domain.MenuAggregate.ValueObjects;
+using Gproject.Domain.MenuReviewAggregate.ValueObjects;
 using System.Data;
+using static System.Collections.Specialized.BitVector32;
 
-namespace Gproject.Domain.Menu
+namespace Gproject.Domain.MenuAggregate
 {
     public sealed class Menu : AggregateRoot<MenuId>
     {
@@ -24,17 +25,18 @@ namespace Gproject.Domain.Menu
         public DateTime CreatededDateTime { get; }
         public DateTime UpdatedDateTime { get; }
         public Menu(MenuId menuId, string name, string description,
-            HostId hostId, DateTime creatededDateTime, DateTime updatedDateTime) : base(menuId)
+            HostId hostId, List<MenuSection> sections, DateTime creatededDateTime, DateTime updatedDateTime) : base(menuId)
         {
             Name= name; 
             Description= description;   
             HostId= hostId;
-            CreatededDateTime= creatededDateTime;                
+            _sections = sections;
+            CreatededDateTime = creatededDateTime;                
             UpdatedDateTime= updatedDateTime;
         }
-        public static Menu Create(string name, string description, HostId hostId)
+        public static Menu Create(string name, string description, HostId hostId, List<MenuSection> sections)
         {
-            return new(MenuId.CreateUnique(), name, description, hostId, DateTime.UtcNow, DateTime.UtcNow);
+            return new(MenuId.CreateUnique(), name, description, hostId, sections, DateTime.UtcNow, DateTime.UtcNow);
         }
     }
 }

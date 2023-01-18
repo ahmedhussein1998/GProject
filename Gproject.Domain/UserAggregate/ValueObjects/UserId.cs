@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gproject.Domain.User.ValueObjects
+namespace Gproject.Domain.UserAggregate.ValueObjects
 {
     public sealed class UserId : ValueObject
     {

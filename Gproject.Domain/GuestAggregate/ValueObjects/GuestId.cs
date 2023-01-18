@@ -5,17 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gproject.Domain.Dinner.ValueObjects
+namespace Gproject.Domain.GuestAggregate.ValueObjects
 {
-    public sealed class DinnerId : ValueObject
+    public sealed class GuestId : ValueObject
     {
         public Guid Value { get; }
-        private DinnerId(Guid value)
+        private GuestId(Guid value)
         {
             Value = value;
         }
 
-        public static DinnerId CreateUnique()
+        public static GuestId CreateUnique()
         {
             return new(Guid.NewGuid());
         }

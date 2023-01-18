@@ -18,12 +18,18 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastruct(this IServiceCollection service,
         ConfigurationManager configuration)
     {
-        service.AddAuth(configuration);
+        service.AddAuth(configuration).AddPresistance();
         service.AddSingleton<IDataTimeProvider, DataTimeProvider>();
-        service.AddScoped<IUserRepositroy, UserRepsitory>();
         return service;
     }
-    public static IServiceCollection AddAuth(this IServiceCollection service,
+
+    public static IServiceCollection AddPresistance(this IServiceCollection service)
+    {
+        service.AddScoped<IUserRepositroy, UserRepsitory>();
+        service.AddScoped<IMenuRepository, MenuRepository>();
+        return service;
+    }
+        public static IServiceCollection AddAuth(this IServiceCollection service,
         ConfigurationManager configuration)
     {
         var jwtSettings = new JwtSettings();
