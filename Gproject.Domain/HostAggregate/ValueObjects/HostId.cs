@@ -25,9 +25,9 @@ namespace Gproject.Domain.HostAggregate.ValueObjects
         {
             yield return Value;
         }
-        public static HostId Create(string hostId)
+        public static HostId Create(Guid value)
         {
-            return HostId.CreateUnique();
+            return new HostId(value);
         }
     }
 }

@@ -16,12 +16,18 @@ namespace Gproject.Domain.MenuAggregate.Entities
             Description = description;
         }
 
-        public string Name { get; }
-        public string Description { get; }
+        public string Name { get; private set; }
+        public string Description { get; private set;  }
 
         public static MenuItem Create(string name, string description)
         {
             return new(MenuItemId.CreateUnique(), name, description);
         }
+        #pragma warning disable CS8618
+        private MenuItem()
+        {
+
+        }
+        #pragma warning restore CS8618
     }
 }

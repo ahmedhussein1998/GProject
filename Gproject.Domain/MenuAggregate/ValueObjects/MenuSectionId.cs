@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,6 +19,10 @@ namespace Gproject.Domain.MenuAggregate.ValueObjects
         public static MenuSectionId CreateUnique()
         {
             return new (Guid.NewGuid());
+        }
+        public static MenuSectionId Create(Guid Value)
+        {
+            return new MenuSectionId(Value);
         }
         public override IEnumerable<object> GetEqualityComponents()
         {

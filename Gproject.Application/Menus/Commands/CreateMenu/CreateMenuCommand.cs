@@ -12,7 +12,7 @@ namespace Gproject.Application.Menus.Commands.CreateMenu
     public record CreateMenuCommand(
        string Name,
        string Description,
-       string HostId,
+       Guid HostId,
        List<MenuSectionCommand> Sections):IRequest<ErrorOr<Menu>>;
 
     public record MenuSectionCommand(

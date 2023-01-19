@@ -29,8 +29,7 @@ namespace Gproject.Application.Menus.Commands.CreateMenu
                                     sections: request.Sections.ConvertAll
                                         (section => MenuSection.Create(section.Name, section.Description, 
                                             section.Items.ConvertAll
-                                                (items => MenuItem.Create(items.Name, items.Description))))
-                                        );
+                                                (items => MenuItem.Create(items.Name, items.Description)))));
             // Persist Menu
             _menurepository.Add(menu);
             // Return Menu

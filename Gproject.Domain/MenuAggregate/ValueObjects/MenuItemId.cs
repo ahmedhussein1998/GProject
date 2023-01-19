@@ -19,6 +19,11 @@ namespace Gproject.Domain.MenuAggregate.ValueObjects
         {
             return new(Guid.NewGuid());
         }
+
+        public static MenuItemId Create(Guid Value)
+        {
+            return new MenuItemId(Value);
+        }
         public override IEnumerable<object> GetEqualityComponents()
         {
             yield return Value;

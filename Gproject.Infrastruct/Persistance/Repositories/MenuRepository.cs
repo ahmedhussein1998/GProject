@@ -6,14 +6,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gproject.Infrastruct.Persistance
+namespace Gproject.Infrastruct.Persistance.Repositories
 {
     public class MenuRepository : IMenuRepository
     {
+        private readonly GProjectDbContext _context;
+
+        public MenuRepository(GProjectDbContext context)
+        {
+            _context = context;
+        }
+
         private static readonly List<Menu> _menu = new();
         public void Add(Menu menu)
         {
-            _menu.Add(menu);        
+            _context.Menus.Add(menu);
+            _context.SaveChangesAsync();
         }
     }
 }

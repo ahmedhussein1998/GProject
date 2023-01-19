@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gproject.Infrastruct.Persistance
+namespace Gproject.Infrastruct.Persistance.Repositories
 {
     public class UserRepsitory : IUserRepositroy
     {

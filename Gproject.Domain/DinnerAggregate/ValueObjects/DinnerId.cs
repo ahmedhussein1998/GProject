@@ -19,6 +19,10 @@ namespace Gproject.Domain.DinnerAggregate.ValueObjects
         {
             return new(Guid.NewGuid());
         }
+        public static DinnerId Create(Guid Value)
+        {
+            return new DinnerId(Value);
+        }
         public override IEnumerable<object> GetEqualityComponents()
         {
             yield return Value;
