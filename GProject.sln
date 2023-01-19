@@ -1,25 +1,26 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30114.105
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gproject.Api", "Gproject.Api\Gproject.Api.csproj", "{F6907573-A374-4B8C-B8C6-1DD01EB9F6F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gproject.Api", "Gproject.Api\Gproject.Api.csproj", "{F6907573-A374-4B8C-B8C6-1DD01EB9F6F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gproject.Application", "Gproject.Application\Gproject.Application.csproj", "{7E5BFBB1-0DB0-4DA6-AED3-EF1B7F339344}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gproject.Application", "Gproject.Application\Gproject.Application.csproj", "{7E5BFBB1-0DB0-4DA6-AED3-EF1B7F339344}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gproject.contracts", "Gproject.contracts\Gproject.contracts.csproj", "{BD78EB05-939E-449D-8E68-F688D3B3F126}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gproject.contracts", "Gproject.contracts\Gproject.contracts.csproj", "{BD78EB05-939E-449D-8E68-F688D3B3F126}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gproject.Domain", "Gproject.Domain\Gproject.Domain.csproj", "{33BA7ADC-A1D2-41DF-8B17-6738E44D18C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gproject.Domain", "Gproject.Domain\Gproject.Domain.csproj", "{33BA7ADC-A1D2-41DF-8B17-6738E44D18C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gproject.Infrastruct", "Gproject.Infrastruct\Gproject.Infrastruct.csproj", "{E81736D2-8416-448A-8993-D9677807D5E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gproject.Infrastruct", "Gproject.Infrastruct\Gproject.Infrastruct.csproj", "{E81736D2-8416-448A-8993-D9677807D5E0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{4CA96125-9DA2-48A4-9CF8-646E635388E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gproject.UI", "Gproject.UI\Gproject.UI.csproj", "{7150405C-9BDE-4D0E-B39E-03D0B4A9B060}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{F6907573-A374-4B8C-B8C6-1DD01EB9F6F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -42,5 +43,18 @@ Global
 		{E81736D2-8416-448A-8993-D9677807D5E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E81736D2-8416-448A-8993-D9677807D5E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E81736D2-8416-448A-8993-D9677807D5E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7150405C-9BDE-4D0E-B39E-03D0B4A9B060}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7150405C-9BDE-4D0E-B39E-03D0B4A9B060}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7150405C-9BDE-4D0E-B39E-03D0B4A9B060}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7150405C-9BDE-4D0E-B39E-03D0B4A9B060}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7150405C-9BDE-4D0E-B39E-03D0B4A9B060} = {4CA96125-9DA2-48A4-9CF8-646E635388E8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FEBDBED4-29C6-4154-B9FA-00E91186BCD6}
 	EndGlobalSection
 EndGlobal
