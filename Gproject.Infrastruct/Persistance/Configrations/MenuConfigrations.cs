@@ -84,7 +84,6 @@ namespace Gproject.Infrastruct.Persistance.Configrations
             builder.Property(x => x.Id).HasConversion(id => id.Value, value => MenuId.Create(value));
             builder.Property(x => x.Name).HasMaxLength(200);
             builder.Property(x => x.Description).HasMaxLength(500);
-            builder.OwnsOne(x => x.AverageRating);
             builder.Property(x => x.HostId).HasConversion(id => id.Value, value => HostId.Create(value));
             builder.Property(x => x.CreatededDateTime).HasColumnType("DateTime");
             builder.Property(x => x.UpdatedDateTime).HasColumnType("DateTime");

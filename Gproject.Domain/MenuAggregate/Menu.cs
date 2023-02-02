@@ -17,7 +17,7 @@ namespace Gproject.Domain.MenuAggregate
         private readonly List<MenuReviewId> _menuReviewIds =new();
         public string Name { get; private set; }
         public string Description { get; private set; }
-        public AverageRating? AverageRating { get; private set; }
+        public string? AverageRating { get; private set; }
         public IReadOnlyList<MenuSection> Sections => _sections;
         public HostId HostId { get; private set; }
         public IReadOnlyList<DinnerId> DinnerIds => _dinner;
@@ -34,9 +34,9 @@ namespace Gproject.Domain.MenuAggregate
             CreatededDateTime = creatededDateTime;                
             UpdatedDateTime= updatedDateTime;
         }
-        public static Menu Create(string name, string description, HostId hostId, List<MenuSection> sections, AverageRating averageRating)
+        public static Menu Create(string name, string description, HostId hostId, List<MenuSection> sections)
         {
-            return new(MenuId.CreateUnique(), name, description, hostId, sections??new(),averageRating.CreateNew(averageRating.value, averageRating.NumRating), DateTime.UtcNow, DateTime.UtcNow);
+            return new(MenuId.CreateUnique(), name, description, hostId, sections??new(), DateTime.UtcNow, DateTime.UtcNow);
         }
         #pragma warning disable CS8618
         private Menu()
