@@ -10,17 +10,24 @@ using System.Threading.Tasks;
 namespace Gproject.Application.Menus.Commands.CreateMenu
 {
     public record CreateMenuCommand(
-       string Name,
-       string Description,
+       string NameAr,
+       string NameEn,
+       string DescriptionAr,
+       string DescriptionEn,
        Guid HostId,
        List<MenuSectionCommand> Sections):IRequest<ErrorOr<Menu>>;
 
     public record MenuSectionCommand(
-        string Name,
-        string Description,
+        string NameAr,
+        string NameEn,
+        string DescriptionAr,
+        string DescriptionEn,
         List<MenuItemCommand> Items);
 
     public record MenuItemCommand(
-        string Name,
-        string Description);
+        string NameAr,
+        string NameEn,
+        string DescriptionAr,
+        string DescriptionEn
+        );
 }

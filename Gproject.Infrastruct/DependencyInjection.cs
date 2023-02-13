@@ -38,6 +38,8 @@ public static class DependencyInjection
         var jwtSettings = new JwtSettings();
         configuration.Bind(JwtSettings.SectionName, jwtSettings);
         service.AddSingleton(Options.Create(jwtSettings));
+        service.AddSingleton<ICurrentUserService, CurrentUserService>();
+        service.AddHttpContextAccessor();
 
         service.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
         service.AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)

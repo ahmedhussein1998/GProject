@@ -1,48 +1,160 @@
-﻿using Gproject.Domain.Common.Models;
-using Gproject.Domain.DinnerAggregate.ValueObjects;
+﻿using Gproject.Domain.Common.Exceptions;
+using Gproject.Domain.Common.Models;
+using Gproject.Domain.Common.ValueObjects;
 using Gproject.Domain.HostAggregate.ValueObjects;
 using Gproject.Domain.MenuAggregate.Entities;
-using Gproject.Domain.MenuAggregate.ValueObjects;
-using Gproject.Domain.MenuReviewAggregate.ValueObjects;
-using System.Data;
-using static System.Collections.Specialized.BitVector32;
 
 namespace Gproject.Domain.MenuAggregate
 {
-    public sealed class Menu : AggregateRoot<MenuId>
+    public sealed class Menu : AuditableEntity<Guid> , IAggregateRoot
     {
 
         private readonly List<MenuSection> _sections = new();
-        private readonly List<DinnerId> _dinner = new();
-        private readonly List<MenuReviewId> _menuReviewIds =new();
-        public string Name { get; private set; }
-        public string Description { get; private set; }
+        //private readonly List<DinnerId> _dinner = new();
+        //private readonly List<MenuReviewId> _menuReviewIds =new();
+        public DescriptionLocalized Name { get; private set; }
+        public DescriptionLocalized Description { get; private set; }
         public string? AverageRating { get; private set; }
         public IReadOnlyList<MenuSection> Sections => _sections;
         public HostId HostId { get; private set; }
-        public IReadOnlyList<DinnerId> DinnerIds => _dinner;
-        public IReadOnlyList<MenuReviewId> MenuReviewIds => _menuReviewIds;
-        public DateTime CreatededDateTime { get; private set; }
-        public DateTime UpdatedDateTime { get; private set; }
-        public Menu(MenuId menuId, string name, string description,
-            HostId hostId, List<MenuSection> sections, DateTime creatededDateTime, DateTime updatedDateTime) : base(menuId)
+        //public IReadOnlyList<DinnerId> DinnerIds => _dinner;
+        //public IReadOnlyList<MenuReviewId> MenuReviewIds => _menuReviewIds;
+
+
+        public Menu( DescriptionLocalized name, DescriptionLocalized description,
+            HostId hostId, List<MenuSection> sections, bool isActive = true, bool isDeleted = false) : this()  
         {
+            
             Name= name; 
             Description= description;   
             HostId= hostId;
             _sections = sections;
-            CreatededDateTime = creatededDateTime;                
-            UpdatedDateTime= updatedDateTime;
+            IsActive= isActive;
+            IsDeleted= isDeleted;
+          
         }
-        public static Menu Create(string name, string description, HostId hostId, List<MenuSection> sections)
+#pragma warning disable CS8618
+        public Menu() :base()
         {
-            return new(MenuId.CreateUnique(), name, description, hostId, sections??new(), DateTime.UtcNow, DateTime.UtcNow);
-        }
-        #pragma warning disable CS8618
-        private Menu()
-        {
+            if (Id == default)
+                Id = Guid.NewGuid();
+
 
         }
-        #pragma warning restore CS8618
+
+        #region Behavior
+        public static Menu Create(DescriptionLocalized name, DescriptionLocalized description, HostId hostId, List<MenuSection> sections,bool isActive = true , bool isDeleted = false)
+        {
+            return new( name, description, hostId, sections??new(),isActive,isDeleted);
+        }
+
+        public void Activate() => IsActive = true;
+        public void Deactivate() => IsActive = false;
+        public Menu Update(DescriptionLocalized name, DescriptionLocalized description, HostId hostId, List<MenuSection> sections, bool isActive , bool isDeleted )
+        {
+            Name = name;
+            Description = description;
+
+            if (sections != null)
+            {
+                _sections.Clear();
+                _sections.AddRange(sections);
+            }
+            IsActive = isActive;
+            IsDeleted = isDeleted;
+            HostId = hostId;
+            SetUpdate();
+
+            return this;
+        }
+
+
+
+        #region MenuSection Behavior
+        public void ActiveMenuSection(Guid menuSectionId)
+        {
+            var existedMenuSection = _sections.Single(c => c.Id == menuSectionId);
+            // to do
+            if (existedMenuSection == default)
+                throw new MenuSectionDomainException("MenuSection not existed ");
+            existedMenuSection.Activate();
+        }
+
+        public void DeactiveMenuSection(Guid menuSectionId)
+        {
+            var existedMenuSection = _sections.Single(c => c.Id == menuSectionId);
+            // to do
+            if (existedMenuSection == default)
+                throw new MenuSectionDomainException("MenuSection not existed ");
+            existedMenuSection.Deactivate();
+        }
+
+        public void RemoveMenuSection(Guid menuSectionId)
+        {
+            var existedMenuSection = _sections.Single(c => c.Id == menuSectionId);
+            // to do
+            if (existedMenuSection == default)
+                throw new MenuSectionDomainException("MenuSection not existed ");
+            existedMenuSection.Remove();
+        }
+
+        public void UpdateMenuSection(Guid menuSectionId, DescriptionLocalized name, DescriptionLocalized description, bool isActive)
+        {
+            if (_sections == default)
+                throw new MenuSectionDomainException("can't modify empty data");
+
+            var existedMenuSection = _sections.Single(c => c.Id == menuSectionId);
+            // to do
+            if (existedMenuSection == default)
+                throw new MenuSectionDomainException("MenuSection not existed ");
+            existedMenuSection.Update(  name,  description,  isActive);
+        }
+
+
+
+
+        #endregion
+
+        #region MenuItem Behavior
+
+        public void AddMenuItem(Guid menuSectionId, DescriptionLocalized name, DescriptionLocalized description, bool isActive)
+        {
+            var menuSection = _sections.FirstOrDefault(c => c.Id == menuSectionId);
+            menuSection.AddMenuItem( name, description, isActive);
+        }
+
+        public void UpdateMenuItem(Guid menuSectionId,Guid menuItemId, DescriptionLocalized name, DescriptionLocalized description, bool isActive)
+        {
+            var menuSection = _sections.FirstOrDefault(c => c.Id == menuSectionId);
+            menuSection.UpdateMenuItem(menuItemId, name, description, isActive);
+        }
+
+
+        public void ActiveMenuItem(Guid menuSectionId, Guid menuItemId)
+        {
+            var menuSection = _sections.FirstOrDefault(c => c.Id == menuSectionId);
+            menuSection.ActiveMenuItem(menuItemId);
+        }
+
+        public void DeactiveMenuItem(Guid menuSectionId, Guid menuItemId)
+        {
+            var menuSection = _sections.FirstOrDefault(c => c.Id == menuSectionId);
+            menuSection.DeactiveMenuItem(menuItemId);
+        }
+
+        public void RemoveMenuItem(Guid menuSectionId, Guid menuItemId)
+        {
+            var menuSection = _sections.FirstOrDefault(c => c.Id == menuSectionId);
+            menuSection.RemoveMenuItem(menuItemId);
+        }
+
+        #endregion
+
+
+        #endregion
+
+
+
+#pragma warning restore CS8618
     }
 }

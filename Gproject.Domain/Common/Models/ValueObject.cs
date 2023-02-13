@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,7 +10,7 @@ namespace Gproject.Domain.Common.Models
 {
     public abstract class ValueObject : IEquatable<ValueObject>
     {
-        public abstract IEnumerable<object> GetEqualityComponents();
+        protected abstract IEnumerable<object> GetEqualityComponents();
         public override bool Equals(object? obj)
         {
             if (obj is null || obj.GetType() != GetType()) return false;
@@ -34,6 +36,16 @@ namespace Gproject.Domain.Common.Models
         {
             return Equals((object?)other); 
         }
+        public virtual string GetLocalizedPropertyValue(string propertyName)
+        {
+            var currentCulture = CultureInfo.CurrentCulture;
+            var twoLetterCulture = currentCulture.TwoLetterISOLanguageName;
+
+            var culturePropertyName = propertyName + twoLetterCulture;
+
+            return (string)GetType().GetProperty(culturePropertyName, BindingFlags.Public | BindingFlags.IgnoreCase | BindingFlags.Instance)?.GetValue(this, null);
+        }
+
     }
 
     public class Price : ValueObject
@@ -46,10 +58,12 @@ namespace Gproject.Domain.Common.Models
             Currancy = currancy;
         }
 
-        public override IEnumerable<object> GetEqualityComponents()
+        protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Amount;
             yield return Currancy;
         }
+        
+
     }
 }

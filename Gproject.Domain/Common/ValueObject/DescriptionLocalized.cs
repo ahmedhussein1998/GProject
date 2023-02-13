@@ -1,0 +1,26 @@
+﻿using Gproject.Domain.Common.Models;
+
+namespace Gproject.Domain.Common.ValueObjects
+{
+    public class DescriptionLocalized : ValueObject
+    {
+
+        public string DescriptionAr { get; }
+        public string DescriptionEn { get; }
+        public string DescriptionLoc => GetLocalizedPropertyValue(nameof(DescriptionLoc));
+
+        public static implicit operator string(DescriptionLocalized d) => d.DescriptionLoc;
+        private DescriptionLocalized() { }
+        public DescriptionLocalized(string descriptionAr, string descriptionEn)
+        {
+            DescriptionAr = descriptionAr;
+            DescriptionEn = descriptionEn;
+        }
+                                    
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return DescriptionAr;
+            yield return DescriptionEn;
+        }
+    }
+}

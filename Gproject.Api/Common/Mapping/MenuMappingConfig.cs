@@ -1,9 +1,4 @@
-﻿using Gproject.Application.Authentication.Commands.Register;
-using Gproject.Application.Authentication.Common;
-using Gproject.Application.Authentication.Queries.Login;
-using Gproject.Application.Menus.Commands.CreateMenu;
-using Gproject.contracts.Authentication;
-using Gproject.contracts.Menus;
+﻿using Gproject.contracts.Menus;
 using Gproject.Domain.MenuAggregate;
 using Mapster;
 using MenuSection = Gproject.Domain.MenuAggregate.Entities.MenuSection;
@@ -15,20 +10,23 @@ namespace Gproject.Api.Common.Mapping
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<(CreateMenuRequest request, string HostId), CreateMenuCommand>()
-                .Map(dest => dest.HostId, src => src.HostId)
-                .Map(dest => dest, src => src.request);
+            //config.NewConfig<(CreateMenuRequest request, string HostId), CreateMenuCommand>()
+            //    .Map(dest => dest.HostId, src => src.HostId)
+            //    .Map(dest => dest, src => src.request);
             config.NewConfig<Menu, MenuResponse>()
-                .Map(dest => dest.Id , src => src.Id.Value)
-                .Map(dest => dest.averageRating , src => src.AverageRating)
-                .Map(dest => dest.HostId, src => src.HostId)
-                .Map(dest=> dest.dinnerIds , src =>src.DinnerIds.Select(dinnerId => dinnerId.Value))
-                .Map(dest => dest.MenuReviewIds, src => src.MenuReviewIds.Select(menuRevireId => menuRevireId.Value));
+                .Map(dest => dest.averageRating, src => src.AverageRating)
+                .Map(dest => dest.Name, src => src.Name.DescriptionLoc)
+                .Map(dest => dest.Description, src => src.Description.DescriptionLoc);
+                //.Map(dest => dest.MenuReviewIds, src => src.MenuReviewIds.Select(menuRevireId => menuRevireId.Value));
+                //.Map(dest => dest.HostId, src => src.HostId)
+                //.Map(dest => dest.dinnerIds, src => src.DinnerIds.Select(dinnerId => dinnerId.Value))
 
             config.NewConfig<MenuSection, MenuSectionResponse>()
-                .Map(dest => dest.Id, src => src.Id.Value);
+                 .Map(dest => dest.Name, src => src.Name.DescriptionLoc)
+                 .Map(dest => dest.Description, src => src.Description.DescriptionLoc);
             config.NewConfig<MenuItem, MenuItemResponse>()
-               .Map(dest => dest.Id, src => src.Id.Value);
+                .Map(dest => dest.Name, src => src.Name.DescriptionLoc)
+                .Map(dest => dest.Description, src => src.Description.DescriptionLoc);
         }
     }
 }

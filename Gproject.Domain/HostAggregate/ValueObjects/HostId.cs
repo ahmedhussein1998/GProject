@@ -1,11 +1,4 @@
 ﻿using Gproject.Domain.Common.Models;
-using Gproject.Domain.MenuAggregate.ValueObjects;
-using Gproject.Domain.MenuAggregate;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gproject.Domain.HostAggregate.ValueObjects
 {
@@ -21,7 +14,7 @@ namespace Gproject.Domain.HostAggregate.ValueObjects
         {
             return new(Guid.NewGuid());
         }
-        public override IEnumerable<object> GetEqualityComponents()
+        protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Value;
         }

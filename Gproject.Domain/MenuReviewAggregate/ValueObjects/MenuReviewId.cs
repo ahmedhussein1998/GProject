@@ -24,7 +24,7 @@ namespace Gproject.Domain.MenuReviewAggregate.ValueObjects
         {
             return new MenuReviewId(Value);
         }
-        public override IEnumerable<object> GetEqualityComponents()
+        protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Value;
         }

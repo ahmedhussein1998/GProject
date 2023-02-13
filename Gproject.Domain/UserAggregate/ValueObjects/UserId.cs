@@ -19,7 +19,7 @@ namespace Gproject.Domain.UserAggregate.ValueObjects
         {
             return new(Guid.NewGuid());
         }
-        public override IEnumerable<object> GetEqualityComponents()
+        protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Value;
         }

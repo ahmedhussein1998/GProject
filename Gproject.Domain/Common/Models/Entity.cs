@@ -8,10 +8,18 @@ namespace Gproject.Domain.Common.Models
 {
     public abstract class Entity<TId> : IEquatable<Entity<TId>> where TId: notnull
     {
-        public TId Id { get; protected set; }
-        protected Entity(TId id)
+        TId _Id;
+
+        public virtual TId Id
         {
-            Id = id;    
+            get
+            {
+                return _Id;
+            }
+            protected set
+            {
+                _Id = value;
+            }
         }
         public override bool Equals(object? obj)
         {

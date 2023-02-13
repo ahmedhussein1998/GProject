@@ -12,8 +12,10 @@ namespace Gproject.Application.Menus.Commands.CreateMenu
     {
         public CreateManuCommandValidator()
         {
-            RuleFor(x => x.Name).NotEmpty();
-            RuleFor(x => x.Description).NotEmpty();
+            RuleFor(x => x.NameAr).NotEmpty();
+            RuleFor(x => x.NameEn).NotEmpty();
+            RuleFor(x => x.DescriptionAr).NotEmpty();
+            RuleFor(x => x.DescriptionEn).NotEmpty();
             RuleFor(x => x.Sections).NotEmpty();
         }
     }

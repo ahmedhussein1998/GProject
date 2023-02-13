@@ -23,7 +23,7 @@ namespace Gproject.Domain.DinnerAggregate.ValueObjects
         {
             return new DinnerId(Value);
         }
-        public override IEnumerable<object> GetEqualityComponents()
+        protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Value;
         }

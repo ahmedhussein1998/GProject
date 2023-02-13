@@ -1,5 +1,6 @@
 ﻿using ErrorOr;
 using Gproject.Application.Common.Interfaces.Persistance;
+using Gproject.Domain.Common.ValueObjects;
 using Gproject.Domain.HostAggregate.ValueObjects;
 using Gproject.Domain.MenuAggregate;
 using Gproject.Domain.MenuAggregate.Entities;
@@ -25,12 +26,12 @@ namespace Gproject.Application.Menus.Commands.CreateMenu
         {
             await Task.CompletedTask;
             // Create Menu
-            var menu = Menu.Create(name: request.Name, description: request.Description, hostId: HostId.Create(request.HostId),
+            var menu = Menu.Create(name: new DescriptionLocalized(request.NameAr, request.NameEn) , description: new DescriptionLocalized(request.DescriptionAr, request.DescriptionEn) , hostId: HostId.Create(request.HostId),
                                     sections: request.Sections.ConvertAll
-                                        (section => MenuSection.Create(section.Name, section.Description, 
-                                            section.Items.ConvertAll
-                                                (items => MenuItem.Create(items.Name, items.Description)))));
-            // Persist Menu
+                                        (section => MenuSection.Create(new DescriptionLocalized(section.NameAr, section.NameEn), new DescriptionLocalized(section.DescriptionAr, section.DescriptionEn), 
+                                           section.Items.ConvertAll
+                                             (items => MenuItem.Create( new DescriptionLocalized(items.DescriptionAr, items.DescriptionEn), new DescriptionLocalized(items.DescriptionAr, items.DescriptionEn) )))));
+            // Persist  Menu
             _menurepository.Add(menu);
             // Return Menu
             return menu;
