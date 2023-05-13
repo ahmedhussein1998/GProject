@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gproject.Applicatoin.Resources
+namespace Gproject.Domain.Common.Resources
 {
     public static class SharedResourcesKeys
     {
-        public const string Required = "Required";
-        public const string CreateSuccess = "CreateSuccess";
         public const string DublicateEmail = "DublicateEmail";
+        public const string InvalidCredintal = "InvalidCredintal";
     }
 }

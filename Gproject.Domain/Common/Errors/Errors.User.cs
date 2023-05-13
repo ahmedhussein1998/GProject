@@ -1,5 +1,5 @@
 ﻿using ErrorOr;
-using Gproject.Domain.Resources;
+using Gproject.Domain.Common.Resources;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,11 @@ namespace Gproject.Domain.Common.Errors
     {
         public static class User
         {
-            public static Error DuplicateEmail => Error.Conflict(code: "User.DuplicateEmail", description: "Email Dublicated") );
+            public static Error DuplicateEmail(IStringLocalizer<SharedResources> stringLocalizer)
+            {
+                string localizedString = stringLocalizer[SharedResourcesKeys.DublicateEmail];
+                return Error.Conflict(code: "User.DuplicateEmail", description: localizedString);
+            }
         }
     }
 }

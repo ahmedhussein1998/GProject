@@ -4,7 +4,7 @@ using Gproject.Domain.Common.ValueObjects;
 using Gproject.Domain.HostAggregate.ValueObjects;
 using Gproject.Domain.MenuAggregate;
 using Gproject.Domain.MenuAggregate.Entities;
-using Gproject.Domain.Resources;
+using Gproject.Domain.Common.Resources;
 using MediatR;
 using Microsoft.Extensions.Localization;
 

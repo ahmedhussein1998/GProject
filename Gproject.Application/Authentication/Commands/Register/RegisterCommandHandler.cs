@@ -5,7 +5,7 @@ using Gproject.Domain.Entities;
 using MediatR;
 using Gproject.Domain.Common.Errors;
 using Gproject.Application.Authentication.Common;
-using Gproject.Domain.Resources;
+using Gproject.Domain.Common.Resources;
 using Microsoft.Extensions.Localization;
 using Gproject.Application.Common.Errors;
 
@@ -29,13 +29,7 @@ namespace Gproject.Application.Authentication.Commands.Register
             //1. Check If User Already Exists
             if (_userRepositroy.GetUserByEmail(command.Email) != null)
             {
-                var Obj = new ErrorOr<ErrorKeys>
-                {
-                    Code = Errors.User.DuplicateEmail.Code,
-                    description = _stringLocalizer[SharedResourcesKeys.DublicateEmail]
-
-                };
-                return Obj;
+                return Errors.User.DuplicateEmail(_stringLocalizer);
             }
             //2. Create User (Generate Unique ID) & Persist To DB
             var user = new User

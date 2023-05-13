@@ -38,8 +38,6 @@ builder.Services.AddControllersWithViews();
         List<CultureInfo> supportedCultures = new List<CultureInfo>
         {
             new CultureInfo("en-US"),
-            new CultureInfo("de-DE"),
-            new CultureInfo("fr-FR"),
             new CultureInfo("ar-EG")
         };
 

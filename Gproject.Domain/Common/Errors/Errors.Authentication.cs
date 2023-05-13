@@ -1,17 +1,20 @@
 ﻿using ErrorOr;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Gproject.Domain.Common.Resources;
+using Microsoft.Extensions.Localization;
+
 
 namespace Gproject.Domain.Common.Errors
 {
     public static partial class Errors
     {
         public static class Authentication
-        { 
-            public static Error InvalidCredential => Error.Validation(code: "Auth.InvalidCredintal", description: "Invalid Credentials.");
+        {
+            public static Error InvalidCredential(IStringLocalizer<SharedResources> stringLocalizer)
+            {
+                string localizedString = stringLocalizer[SharedResourcesKeys.InvalidCredintal];
+                return Error.Validation(code: "Auth.InvalidCredintal", description: localizedString);
+            } 
+
         }
     }
 }

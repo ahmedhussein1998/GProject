@@ -5,6 +5,9 @@ using Gproject.Domain.Entities;
 using MediatR;
 using Gproject.Domain.Common.Errors;
 using Gproject.Application.Authentication.Common;
+using Microsoft.Extensions.Localization;
+using Gproject.Domain.Common.Resources;
+
 
 namespace Gproject.Application.Authentication.Queries.Login
 {
@@ -12,10 +15,12 @@ namespace Gproject.Application.Authentication.Queries.Login
     {
         private readonly IJwtTokenGenerator _JwtTokenGenerator;
         private readonly IUserRepositroy _userRepositroy;
-        public LoginQueryHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepositroy userRepositroy)
+        private readonly IStringLocalizer<SharedResources> _stringLocalizer;
+        public LoginQueryHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepositroy userRepositroy, IStringLocalizer<SharedResources> stringLocalizer)
         {
                 _JwtTokenGenerator= jwtTokenGenerator;
                 _userRepositroy= userRepositroy;
+                _stringLocalizer= stringLocalizer;  
         }
         public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQuery query, CancellationToken cancellationToken)
         {
@@ -23,12 +28,12 @@ namespace Gproject.Application.Authentication.Queries.Login
             //1. Validata User Dose Exist
             if (_userRepositroy.GetUserByEmail(query.Email) is not User user)
             {
-                return Errors.Authentication.InvalidCredential;
+                return Errors.Authentication.InvalidCredential(_stringLocalizer);
             }
             //2. Password Is Correct
             if (user.Password != query.Password)
             {
-                return Errors.Authentication.InvalidCredential;
+                return Errors.Authentication.InvalidCredential(_stringLocalizer);
             }
             //3. Create JWT Token 
             var Token = _JwtTokenGenerator.GenerateToken(user);
