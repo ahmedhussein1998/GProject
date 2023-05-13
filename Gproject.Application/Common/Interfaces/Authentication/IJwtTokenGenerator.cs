@@ -12,3 +12,4 @@ namespace Gproject.Application.Common.Interfaces.Authentication;
         string GenerateToken(User user);
     }
 
+ 

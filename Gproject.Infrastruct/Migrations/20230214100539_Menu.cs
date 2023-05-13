@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Gproject.Infrastruct.Migrations
 {
-    public partial class MyFirstMigration : Migration
+    public partial class Menu : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,8 +18,6 @@ namespace Gproject.Infrastruct.Migrations
                     NameEn = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     DescriptionAr = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DescriptionEn = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AverageRating = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    HostId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Created = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     LastModified = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -89,9 +87,24 @@ namespace Gproject.Infrastruct.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_MenuItems_IsDeleted",
+                table: "MenuItems",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MenuItems_MenuSectionId",
                 table: "MenuItems",
                 column: "MenuSectionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Menus_IsDeleted",
+                table: "Menus",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MenuSections_IsDeleted",
+                table: "MenuSections",
+                column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MenuSections_MenuId",

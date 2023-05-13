@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <Folder Include="Menus\Common\" />
+    <Folder Include="Menus\Queries\" />
   </ItemGroup>
 
 </Project>

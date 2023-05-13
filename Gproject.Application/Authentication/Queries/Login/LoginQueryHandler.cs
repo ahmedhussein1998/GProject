@@ -30,7 +30,7 @@ namespace Gproject.Application.Authentication.Queries.Login
             {
                 return Errors.Authentication.InvalidCredential;
             }
-            //3. Create JWT Token
+            //3. Create JWT Token 
             var Token = _JwtTokenGenerator.GenerateToken(user);
 
             return new AuthenticationResult(

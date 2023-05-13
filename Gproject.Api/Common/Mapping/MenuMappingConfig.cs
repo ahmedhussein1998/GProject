@@ -14,7 +14,6 @@ namespace Gproject.Api.Common.Mapping
             //    .Map(dest => dest.HostId, src => src.HostId)
             //    .Map(dest => dest, src => src.request);
             config.NewConfig<Menu, MenuResponse>()
-                .Map(dest => dest.averageRating, src => src.AverageRating)
                 .Map(dest => dest.Name, src => src.Name.DescriptionLoc)
                 .Map(dest => dest.Description, src => src.Description.DescriptionLoc);
                 //.Map(dest => dest.MenuReviewIds, src => src.MenuReviewIds.Select(menuRevireId => menuRevireId.Value));

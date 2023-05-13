@@ -14,20 +14,17 @@ namespace Gproject.Domain.MenuAggregate
         //private readonly List<MenuReviewId> _menuReviewIds =new();
         public DescriptionLocalized Name { get; private set; }
         public DescriptionLocalized Description { get; private set; }
-        public string? AverageRating { get; private set; }
         public IReadOnlyList<MenuSection> Sections => _sections;
-        public HostId HostId { get; private set; }
         //public IReadOnlyList<DinnerId> DinnerIds => _dinner;
         //public IReadOnlyList<MenuReviewId> MenuReviewIds => _menuReviewIds;
 
 
         public Menu( DescriptionLocalized name, DescriptionLocalized description,
-            HostId hostId, List<MenuSection> sections, bool isActive = true, bool isDeleted = false) : this()  
+             List<MenuSection> sections, bool isActive = true, bool isDeleted = false) : this()  
         {
             
             Name= name; 
             Description= description;   
-            HostId= hostId;
             _sections = sections;
             IsActive= isActive;
             IsDeleted= isDeleted;
@@ -43,9 +40,9 @@ namespace Gproject.Domain.MenuAggregate
         }
 
         #region Behavior
-        public static Menu Create(DescriptionLocalized name, DescriptionLocalized description, HostId hostId, List<MenuSection> sections,bool isActive = true , bool isDeleted = false)
+        public static Menu Create(DescriptionLocalized name, DescriptionLocalized description, List<MenuSection> sections,bool isActive = true , bool isDeleted = false)
         {
-            return new( name, description, hostId, sections??new(),isActive,isDeleted);
+            return new( name, description, sections??new(),isActive,isDeleted);
         }
 
         public void Activate() => IsActive = true;
@@ -62,7 +59,6 @@ namespace Gproject.Domain.MenuAggregate
             }
             IsActive = isActive;
             IsDeleted = isDeleted;
-            HostId = hostId;
             SetUpdate();
 
             return this;

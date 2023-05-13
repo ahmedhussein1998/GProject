@@ -9,6 +9,6 @@ namespace Gproject.Application.Common.Interfaces.Persistance
 {
     public interface IMenuRepository
     {
-        void Add(Menu menu);
+        Task Add(Menu menu);
     }
 }

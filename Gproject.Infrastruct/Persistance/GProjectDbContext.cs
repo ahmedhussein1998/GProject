@@ -39,9 +39,10 @@ namespace Gproject.Infrastruct.Persistance
                         break;
                 }
 
-            var result = await base.SaveChangesAsync(cancellationToken);
 
-            return result > 0;
+            var result =  base.SaveChanges();
+
+            return  result > 0;
         }
 
         protected override void OnModelCreating(ModelBuilder modelbuilder)

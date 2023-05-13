@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gproject.Infrastruct.Migrations
 {
     [DbContext(typeof(GProjectDbContext))]
-    [Migration("20230208140355_MyFirstMigration")]
-    partial class MyFirstMigration
+    [Migration("20230214100539_Menu")]
+    partial class Menu
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -60,6 +60,8 @@ namespace Gproject.Infrastruct.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IsDeleted");
+
                     b.HasIndex("MenuSectionId");
 
                     b.ToTable("MenuItems", (string)null);
@@ -101,6 +103,8 @@ namespace Gproject.Infrastruct.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IsDeleted");
+
                     b.HasIndex("MenuId");
 
                     b.ToTable("MenuSections", (string)null);
@@ -112,9 +116,6 @@ namespace Gproject.Infrastruct.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AverageRating")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTimeOffset>("Created")
                         .HasColumnType("datetimeoffset");
 
@@ -122,9 +123,6 @@ namespace Gproject.Infrastruct.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<Guid?>("HostId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
@@ -144,6 +142,8 @@ namespace Gproject.Infrastruct.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
 
                     b.ToTable("Menus", (string)null);
                 });

@@ -48,7 +48,6 @@ namespace Gproject.Infrastruct.Persistance.Configrations
             builder.ToTable("Menus");
             builder.HasKey(x => x.Id);
        
-            builder.Property(x => x.HostId).HasConversion(id => id.Value, value => HostId.Create(value));
             builder.OwnsOne(x => x.Name, n =>
             {
                 n.Property(n => n.DescriptionAr).HasColumnName("NameAr").IsRequired().HasMaxLength(50);

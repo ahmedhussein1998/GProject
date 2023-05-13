@@ -7,16 +7,23 @@ using System.Threading.Tasks;
 namespace Gproject.contracts.Menus
 {
     public record CreateMenuRequest(
-        string Name,
-        string Description,
-        List<MenuSection> Sections);
+        string NameAr,
+        string NameEn,
+        string? DescriptionAR  ,
+        string DescriptionEn,
+        List<MenuSection>? Sections);
 
     public record MenuSection(
-        string Name, 
-        string Description,
+        string NameAr, 
+        string NameEn, 
+        string DescriptionAr,
+        string DescriptionEn,
         List<MenuItem> Items);
 
     public record MenuItem(
-        string Name,
-        string Description);
+        string NameAr,
+        string NameEn,
+        string DescriptionAr,
+        string DescriptionEn
+        );
 }

@@ -24,7 +24,7 @@ namespace Gproject.Application.Authentication.Commands.Register
             //1. Check If User Already Exists
             if (_userRepositroy.GetUserByEmail(command.Email) != null)
             {
-                return Errors.User.DuplicateEmail;
+                return Errors.User.+;
             }
             //2. Create User (Generate Unique ID) & Persist To DB
             var user = new User
@@ -36,7 +36,6 @@ namespace Gproject.Application.Authentication.Commands.Register
             };
              _userRepositroy.AddUser(user);
             //3. Create Jwt Token
-            Guid userId = Guid.NewGuid();
             var Token = _JwtTokenGenerator.GenerateToken(user);
 
             return new AuthenticationResult(user, Token);

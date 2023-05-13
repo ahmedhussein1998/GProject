@@ -29,7 +29,7 @@ namespace Gproject.Api.Controllers
             _mapper = mapper;
         }
         [HttpPost("Register")]
-        public async Task<IActionResult> Register(RegisterRequest request)
+        public async Task<IActionResult> Register(RegisterCommand request)
        {
             var command = _mapper.Map<RegisterCommand>(request);
             ErrorOr<AuthenticationResult> authResult = await _mediator.Send(command);

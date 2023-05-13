@@ -18,10 +18,11 @@ namespace Gproject.Infrastruct.Persistance.Repositories
         }
 
         private static readonly List<Menu> _menu = new();
-        public void Add(Menu menu)
+        public async Task Add(Menu menu)
         {
             _context.Menus.Add(menu);
-            _context.SaveChangesAsync();
+            await  _context.SaveEntitiesAsync();
+
         }
     }
 }

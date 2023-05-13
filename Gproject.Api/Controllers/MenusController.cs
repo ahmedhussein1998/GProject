@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Gproject.Api.Controllers
 {
-    [Route("hosts/{hostId}/menus")]
+    
     public class MenusController : ApiController
     {
         private readonly ISender _mediator;
@@ -17,13 +17,15 @@ namespace Gproject.Api.Controllers
             _mediator = mediator;
             _mapper = mapper;
         }
+        [Route("hosts/{hostId}/menus")]
         [HttpPost]
-        public async Task<IActionResult> CreateManu([FromRoute] string hostId, CreateMenuRequest request)
+        public async Task<IActionResult> CreateManu( CreateMenuRequest request)
         {
-            var commend = _mapper.Map<CreateMenuCommand>((request, hostId));
+            
+            var commend = _mapper.Map<CreateMenuCommand>(request);
             var CreateMenuResult = await _mediator.Send(commend);
             return CreateMenuResult.Match(
-                menu => Ok(_mapper.Map<MenuResponse>(menu)),
+                menu => Ok(CreateMenuResult),
                 errors => Problem(errors)
                 );
         }

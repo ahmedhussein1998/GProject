@@ -12,11 +12,18 @@ namespace Gproject.Application.Menus.Commands.CreateMenu
     {
         public CreateManuCommandValidator()
         {
-            RuleFor(x => x.NameAr).NotEmpty();
-            RuleFor(x => x.NameEn).NotEmpty();
-            RuleFor(x => x.DescriptionAr).NotEmpty();
+            RuleFor(x => x.NameAr).NotEmpty().WithMessage("Arabic Name is required.")
+                                 .MaximumLength(50)
+                                .OverridePropertyName("Manu Name")
+                                .Matches("^[\\u0621-\\u064A0-9 ]+$") ;
+
+            ;
+            RuleFor(x => x.NameEn).NotEmpty()
+                         .MaximumLength(50)
+                        .Matches("^[0-9A-Za-z ]+$");
+
+
             RuleFor(x => x.DescriptionEn).NotEmpty();
-            RuleFor(x => x.Sections).NotEmpty();
         }
     }
 }
