@@ -51,7 +51,7 @@ namespace Gproject.Infrastruct.Persistance
             //modelbuilder.Entity<Menu>().HasQueryFilter(!p=>p.IsDeleted); 
             foreach (var entityType in modelbuilder.Model.GetEntityTypes())
                 if (typeof(ISoftDelete).IsAssignableFrom(entityType.ClrType))
-                    entityType.AddSoftDeleteQueryFilter ();
+                    entityType.AddSoftDeleteQueryFilter();
 
             base.OnModelCreating(modelbuilder);
         }
