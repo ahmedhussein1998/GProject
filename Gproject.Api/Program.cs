@@ -25,10 +25,9 @@ builder.Services.AddPresentation()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
 #region Localization
 
-        builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews();
         builder.Services.AddLocalization(opt =>
             {
                 opt.ResourcesPath = "";

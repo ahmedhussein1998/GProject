@@ -5,6 +5,9 @@ using Gproject.Domain.Entities;
 using MediatR;
 using Gproject.Domain.Common.Errors;
 using Gproject.Application.Authentication.Common;
+using Gproject.Domain.Resources;
+using Microsoft.Extensions.Localization;
+using Gproject.Application.Common.Errors;
 
 namespace Gproject.Application.Authentication.Commands.Register
 {
@@ -12,10 +15,12 @@ namespace Gproject.Application.Authentication.Commands.Register
     {
         private readonly IJwtTokenGenerator _JwtTokenGenerator;
         private readonly IUserRepositroy _userRepositroy;
-        public RegisterCommandHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepositroy userRepositroy)
+        private readonly IStringLocalizer<SharedResources> _stringLocalizer;
+        public RegisterCommandHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepositroy userRepositroy, IStringLocalizer<SharedResources> stringLocalizer)
         {
             _JwtTokenGenerator = jwtTokenGenerator;
             _userRepositroy = userRepositroy;
+            _stringLocalizer = stringLocalizer;
         }
 
         public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterCommand command, CancellationToken cancellationToken)
@@ -24,7 +29,13 @@ namespace Gproject.Application.Authentication.Commands.Register
             //1. Check If User Already Exists
             if (_userRepositroy.GetUserByEmail(command.Email) != null)
             {
-                return Errors.User.+;
+                var Obj = new ErrorOr<ErrorKeys>
+                {
+                    Code = Errors.User.DuplicateEmail.Code,
+                    description = _stringLocalizer[SharedResourcesKeys.DublicateEmail]
+
+                };
+                return Obj;
             }
             //2. Create User (Generate Unique ID) & Persist To DB
             var user = new User
