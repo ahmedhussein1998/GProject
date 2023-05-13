@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gproject.Applicatoin.Resources
+namespace Gproject.Application.Resources
 {
     public  class SharedResources
     {

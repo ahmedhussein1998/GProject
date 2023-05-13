@@ -7,7 +7,6 @@ using Gproject.Domain.Common.Errors;
 using Gproject.Application.Authentication.Common;
 using Gproject.Domain.Common.Resources;
 using Microsoft.Extensions.Localization;
-using Gproject.Application.Common.Errors;
 
 namespace Gproject.Application.Authentication.Commands.Register
 {

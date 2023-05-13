@@ -4,7 +4,7 @@ using Gproject.Domain.Common.ValueObjects;
 using Gproject.Domain.HostAggregate.ValueObjects;
 using Gproject.Domain.MenuAggregate;
 using Gproject.Domain.MenuAggregate.Entities;
-using Gproject.Domain.Common.Resources;
+using Gproject.Application.Resources;
 using MediatR;
 using Microsoft.Extensions.Localization;
 
@@ -23,7 +23,7 @@ namespace Gproject.Application.Menus.Commands.CreateMenu
 
         public async Task<ErrorOr<string>> Handle(CreateMenuCommand request, CancellationToken cancellationToken)
         {
-            await Task.CompletedTask;
+            //await Task.CompletedTask;
             // Create Menu
             try
             {
@@ -33,7 +33,7 @@ namespace Gproject.Application.Menus.Commands.CreateMenu
                                            section.Items.ConvertAll
                                              (items => MenuItem.Create( new DescriptionLocalized(items.DescriptionAr, items.DescriptionEn), new DescriptionLocalized(items.DescriptionAr, items.DescriptionEn) )))));
 
-            _menurepository.Add(menu);
+            await _menurepository.Add(menu);
             }
             catch (Exception ex)
             {
