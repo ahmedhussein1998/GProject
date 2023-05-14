@@ -7,6 +7,7 @@ using Mapster;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gproject.Api.Controllers
@@ -21,7 +22,7 @@ namespace Gproject.Api.Controllers
         private readonly ISender _mediator;
         private readonly IMapper _mapper;
 
-        public AuthenticationController(IMediator mediator, IMapper mapper)
+        public AuthenticationController(IMediator mediator, IMapper mapper, IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
         {
             //_commandservice = commandservice;
             //_queriesService = queriesService;

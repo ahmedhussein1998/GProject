@@ -8,6 +8,10 @@ namespace Gproject.Api.Controllers
 
     public class DinnersController : ApiController
     {
+        public DinnersController(IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
+        {
+
+        }
         [HttpGet]
         public IActionResult ListDinners()
         {
