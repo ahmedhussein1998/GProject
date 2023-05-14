@@ -12,7 +12,7 @@ namespace Gproject.Api.Controllers
     {
         private readonly ISender _mediator;
         private readonly IMapper _mapper;
-        public MenusController(IMediator mediator, IMapper mapper)
+        public MenusController(IMediator mediator, IMapper mapper, IHttpContextAccessor httpContextAccessor) :base(httpContextAccessor)
         {
             _mediator = mediator;
             _mapper = mapper;

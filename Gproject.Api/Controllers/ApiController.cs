@@ -12,6 +12,13 @@ namespace Gproject.Api.Controllers
     [Authorize]
     public class ApiController : ControllerBase
     {
+        private IHttpContextAccessor _httpContextAccessor;
+        public ApiController(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
+        public string ServerRootPath { get { return $"{Request.Scheme}://{Request.Host}{Request.PathBase}"; } }
+        public string IP { get { return _httpContextAccessor.HttpContext?.Connection?.RemoteIpAddress?.MapToIPv4().ToString(); } }
         protected IActionResult Problem(List<Error> errors)
         {
             if (errors.Count is 0)

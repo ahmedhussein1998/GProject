@@ -22,6 +22,7 @@ public static class DependencyInjection
     {
         service.AddAuth(configuration).AddPresistance(configuration);
         service.AddSingleton<IDataTimeProvider, DataTimeProvider>();
+        service.AddScoped<IUploadFilesService, UploadFilesService>();
         return service;
     }
 
@@ -29,7 +30,7 @@ public static class DependencyInjection
     {
         service.AddDbContext<GProjectDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
         service.AddScoped<IUserRepositroy, UserRepsitory>();
-        service.AddScoped<IMenuRepository, MenuRepository>();
+        service.AddScoped<IMenuRepository, MenuRepository>();       
         return service;
     }
         public static IServiceCollection AddAuth(this IServiceCollection service,

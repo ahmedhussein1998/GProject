@@ -28,4 +28,10 @@
     <ProjectReference Include="..\Gproject.Infrastruct\Gproject.Infrastruct.csproj" />
   </ItemGroup>
 
+
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>
