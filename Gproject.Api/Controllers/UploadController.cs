@@ -1,11 +1,11 @@
 ﻿using ErrorOr;
-using Gproject.Application.Authentication.Common;
+using Gproject.Application.AttachmentsFiles.Commands.UploadFile;
 using Gproject.Application.Common.Interfaces.Services;
 using Gproject.Application.Common.Interfaces.Services.Common;
-using Gproject.contracts.Authentication;
+using Gproject.contracts.UploadFIle;
 using MapsterMapper;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gproject.Api.Controllers
@@ -17,20 +17,32 @@ namespace Gproject.Api.Controllers
     {
         private readonly IUploadFilesService _filesService;
         private readonly IMapper _mapper;
-        public UploadController(IHttpContextAccessor httpContextAccessor, IUploadFilesService filesService, IMapper mapper) :base(httpContextAccessor)
+        private readonly ISender _mediator;
+
+        public UploadController(IHttpContextAccessor httpContextAccessor, IUploadFilesService filesService, IMapper mapper , IMediator mediator) :base(httpContextAccessor)
         {
-            _filesService= filesService;
+            HttpContextAccessor = httpContextAccessor;
+            _filesService = filesService;
             _mapper= mapper;
+            _mediator = mediator;
         }
+
+        public IHttpContextAccessor HttpContextAccessor { get; }
+        public IMediator Mediator { get; }
+
         [HttpPost]
 
-        public async Task<ErrorOr<ResponseFileUploaded>> UploadFile([FromForm] IFormFile options)
+        public async Task<IActionResult> UploadFile([FromForm] FileDtoRequest request)
         {
-            Random rnd = new Random();
-            var path = $"\\Uploads\\Test\\Test_{DateTime.Now.Year}_{DateTime.Now.Month}_{DateTime.Now.Day}_{DateTime.Now.Second}_{rnd.Next(9000)}";
-            ErrorOr<ResponseFileUploaded> Result =await _filesService.UploadFile(path,options);
-            return _mapper.Map<ResponseFileUploaded>(Result);
+                var commend = _mapper.Map<UploadFileCommand>(request);
+                var UploadFileResult = await _mediator.Send(commend);
+                return UploadFileResult.Match(
+                UploadFileResult => Ok(_mapper.Map<ResponseFileUpload>(UploadFileResult)),
+                errors => Problem(errors)
+                );
         }
+
+
         [HttpPost("UploadFiles")]
         public async Task<ErrorOr<ResponseFileUploaded>> UploadFiles([FromForm] List<IFormFile> options)
         {

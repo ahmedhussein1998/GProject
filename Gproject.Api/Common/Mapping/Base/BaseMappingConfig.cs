@@ -19,8 +19,8 @@ namespace Gproject.Api.Common.Mapping
                 
             config.NewConfig<Menu, MenuResponse>()
                 .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.Name, src => src.Name.DescriptionLoc)
-                .Map(dest => dest.Description, src => src.Description.DescriptionLoc);
+                .Map(dest => dest.Name, src => src.Name.Description)
+                .Map(dest => dest.Description, src => src.Description.Description);
 
             config.NewConfig<MenuSection, MenuSectionResponse>()
                 .Map(dest => dest.Id, src => src.Id);

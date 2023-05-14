@@ -14,18 +14,18 @@ namespace Gproject.Api.Common.Mapping
             //    .Map(dest => dest.HostId, src => src.HostId)
             //    .Map(dest => dest, src => src.request);
             config.NewConfig<Menu, MenuResponse>()
-                .Map(dest => dest.Name, src => src.Name.DescriptionLoc)
-                .Map(dest => dest.Description, src => src.Description.DescriptionLoc);
+                .Map(dest => dest.Name, src => src.Name.Description)
+                .Map(dest => dest.Description, src => src.Description.Description);
                 //.Map(dest => dest.MenuReviewIds, src => src.MenuReviewIds.Select(menuRevireId => menuRevireId.Value));
                 //.Map(dest => dest.HostId, src => src.HostId)
                 //.Map(dest => dest.dinnerIds, src => src.DinnerIds.Select(dinnerId => dinnerId.Value))
 
             config.NewConfig<MenuSection, MenuSectionResponse>()
-                 .Map(dest => dest.Name, src => src.Name.DescriptionLoc)
-                 .Map(dest => dest.Description, src => src.Description.DescriptionLoc);
+                 .Map(dest => dest.Name, src => src.Name.Description)
+                 .Map(dest => dest.Description, src => src.Description.Description);
             config.NewConfig<MenuItem, MenuItemResponse>()
-                .Map(dest => dest.Name, src => src.Name.DescriptionLoc)
-                .Map(dest => dest.Description, src => src.Description.DescriptionLoc);
+                .Map(dest => dest.Name, src => src.Name.Description)
+                .Map(dest => dest.Description, src => src.Description.Description);
         }
     }
 }

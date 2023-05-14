@@ -11,7 +11,7 @@ namespace Gproject.Application.Common.Interfaces.Services
 {
     public interface IUploadFilesService
     {
-        Task<ErrorOr<ResponseFileUploaded>> UploadFile(string path, IFormFile file, bool deleteOldFiles = false);
+        Task<string> UploadFile(byte[] file, string fileName, bool deleteOldFiles = false);
         Task<ErrorOr<ResponseFileUploaded>> UploadFiles(string path, List<IFormFile> files, bool deleteOldFiles = false);
         Task<ErrorOr<ResponseFileUploaded>> DeleteFile(string path);
     }

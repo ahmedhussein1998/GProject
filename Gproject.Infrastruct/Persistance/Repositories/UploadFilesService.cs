@@ -30,7 +30,7 @@ namespace Gproject.Infrastruct.Services
                 {
                     var fullPath = $"{_hostingEnvironment.WebRootPath}{path}";
                     File.Delete(fullPath);
-                    return new ResponseFileUploaded(true, "Deleted Done.");
+                    return new ResponseFileUploaded("xxxxx", true, "Deleted Done.");
 
                 }
                 catch (Exception)
@@ -45,12 +45,15 @@ namespace Gproject.Infrastruct.Services
         }
 
         [Obsolete]
-        public async Task<ErrorOr<ResponseFileUploaded>> UploadFile(string path, IFormFile file, bool deleteOldFiles = false)
+        public async Task<string> UploadFile(byte[] file, string fileName, bool deleteOldFiles = false)
         {
             if (file != null)
             {
                 try
                 {
+                    Random rnd = new Random();
+                    var path = $"\\Uploads\\Test\\Test_{DateTime.Now.Year}_{DateTime.Now.Month}_{DateTime.Now.Day}_{DateTime.Now.Second}_{rnd.Next(9000)}";
+
                     if (!Directory.Exists($"{_hostingEnvironment.WebRootPath}\\{path}"))
                     {
                         Directory.CreateDirectory($"{_hostingEnvironment.WebRootPath}\\{path}");
@@ -63,22 +66,24 @@ namespace Gproject.Infrastruct.Services
                                     delegate (string filePath) { File.Delete(filePath); });
                         }
                     }
-                    using (FileStream filestream = File.Create($"{_hostingEnvironment.WebRootPath}\\{path}\\{file.FileName}"))
-                    {
-                        await file.CopyToAsync(filestream);
-                        await filestream.FlushAsync();
-                        var newFullPath = $"\\{path}\\{file.FileName}";
-                        return new ResponseFileUploaded(true, "Uploaded Done.");
-                    }
+
+                    var savedName = $"{Guid.NewGuid()}{DateTime.Now.ToString("dd-MM-yyyy")}{Path.GetExtension(fileName)}";
+
+
+                    await using var fileStream = File.Create(path);
+                    await fileStream.WriteAsync(file);
+
+                    return savedName;
+                    
                 }
                 catch (Exception)
                 {
-                    return Error.Failure(code: "Failure", description: "Failure TO Upload File");
+                    return null;
                 }
             }
             else
             {
-                return Error.NotFound(code: "Not.Found", description: "Not Found Any File");
+                return null;
             }
         }
         [Obsolete]
@@ -113,7 +118,7 @@ namespace Gproject.Infrastruct.Services
                             newFullPaths.Add(newFullPath);
                         }
                     }
-                    return new ResponseFileUploaded(true, "Uploaded All Done.");
+                    return new ResponseFileUploaded("xxxxx",true, "Uploaded All Done.");
                 }
                 catch (Exception)
                 {
