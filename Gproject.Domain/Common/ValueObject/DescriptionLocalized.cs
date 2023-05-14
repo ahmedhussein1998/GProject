@@ -7,9 +7,9 @@ namespace Gproject.Domain.Common.ValueObjects
 
         public string DescriptionAr { get; }
         public string DescriptionEn { get; }
-        public string DescriptionLoc => GetLocalizedPropertyValue(nameof(DescriptionLoc));
+        public string Description => GetLocalizedPropertyValue(nameof(Description));
 
-        public static implicit operator string(DescriptionLocalized d) => d.DescriptionLoc;
+        public static implicit operator string(DescriptionLocalized d) => d.Description;
         private DescriptionLocalized() { }
         public DescriptionLocalized(string descriptionAr, string descriptionEn)
         {
