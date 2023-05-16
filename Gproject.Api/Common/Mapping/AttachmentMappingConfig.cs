@@ -17,10 +17,6 @@ namespace Gproject.Api.Common.Mapping
                 .Map(dest => dest.extension, src => Path.GetExtension(src.File.FileName))
                 .Map(dest => dest.attachment, src => GetFileBytes(src.File));
 
-
-
-            config.NewConfig<ResponseFileUploaded, ResponseFileUpload>()
-                .Map(dest => dest.SavedName, src => src.SavedName);
         }
 
 

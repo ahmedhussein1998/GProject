@@ -8,7 +8,7 @@ namespace Gproject.Application.AttachmentsFiles.Commands.UploadFile
     //public record UploadFileCommand(
     //   byte[] attachment, string displayName, string contentType, string extension, double size) :IRequest<ErrorOr<ResponseFileUploaded>>;
 
-    public class UploadFileCommand : IRequest<ErrorOr<ResponseFileUploaded>>
+    public class UploadFileCommand : IRequest<ErrorOr<ResultFileUpload>>
     {
         public byte[]? attachment { get; set; }
         public string? contentType { get; set; }

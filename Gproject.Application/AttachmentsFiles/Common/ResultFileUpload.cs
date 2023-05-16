@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace Gproject.Application.Common.Interfaces.Services.Common
 {
-    public record ResponseFileUploaded(string SavedName, bool IsPassed, string Message);
+    public record ResultFileUpload(string SavedName);
 }

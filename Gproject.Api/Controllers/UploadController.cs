@@ -1,5 +1,6 @@
 ﻿using ErrorOr;
 using Gproject.Application.AttachmentsFiles.Commands.UploadFile;
+using Gproject.Application.AttachmentsFiles.Commands.UploadFiles;
 using Gproject.Application.Common.Interfaces.Services;
 using Gproject.Application.Common.Interfaces.Services.Common;
 using Gproject.contracts.UploadFIle;
@@ -42,21 +43,57 @@ namespace Gproject.Api.Controllers
                 );
         }
 
+        public byte[][] ConvertFilesToByteArrayArray(IList<IFormFile> files)
+        {
+            var byteArrayArray = new byte[files.Count][];
+            for (int i = 0; i < files.Count; i++)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    files[i].CopyTo(memoryStream);
+                    byteArrayArray[i] = memoryStream.ToArray();
+                }
+            }
+            return byteArrayArray;
+        }
 
         [HttpPost("UploadFiles")]
-        public async Task<ErrorOr<ResponseFileUploaded>> UploadFiles([FromForm] List<IFormFile> options)
+        public async Task<IActionResult> UploadFiles([FromForm] UploadFilesRequest request)
         {
-            Random rnd = new Random();
-            var path = $"\\Uploads\\Test\\Test_{DateTime.Now.Year}_{DateTime.Now.Month}_{DateTime.Now.Day}_{DateTime.Now.Second}_{rnd.Next(9000)}";
-            ErrorOr<ResponseFileUploaded> Result = await _filesService.UploadFiles(path, options);
-            return _mapper.Map<ResponseFileUploaded>(Result);
+            string[] ContantType = new string[50];
+            string[] Extention = new string[50];
+            double[] Size = new double[50];
+            string[] displayName = new string[50];
+
+            for (int i = 0; i < request.Files.Count; i++)
+            {
+                ContantType[i] = request.Files[i].ContentType;
+                Extention[i] = Path.GetExtension(request.Files[i].FileName);
+                Size[i] = (double)request.Files[i].Length / (1024.00 * 1024.00);
+                ContantType[i] = request.Files[i].ContentType;
+                displayName[i] = request.Files[i].FileName;
+            }
+            var commend = new UploadFilesCommand
+           {
+               attachment = ConvertFilesToByteArrayArray(request.Files),
+               displayName = displayName,
+               size = Size,
+               contentType =ContantType,
+               extension = Extention
+            };
+            var UploadFilesResult = await _mediator.Send(commend);
+            return UploadFilesResult.Match(
+            UploadFilesResult => Ok(_mapper.Map<ResponseFilesUpload>(UploadFilesResult)),
+            errors => Problem(errors)
+            );
+
         }
-        [HttpPost("DeletFile")]
-        public async Task<ErrorOr<ResponseFileUploaded>> DeletFile(string Path)
-        {           
-            ErrorOr<ResponseFileUploaded> Result = await _filesService.DeleteFile (Path);
-            return _mapper.Map<ResponseFileUploaded>(Result);
-        }
+        //[HttpPost("DeletFile")]
+        //public async Task<ErrorOr<ResponseFileUploaded>> DeletFile(string Path)
+        //{           
+        //    ErrorOr<ResponseFileUploaded> Result = await _filesService.DeleteFile (Path);
+        //    return _mapper.Map<ResponseFileUploaded>(Result);
+        //}
 
     }
 }

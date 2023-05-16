@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,29 +21,29 @@ namespace Gproject.Infrastruct.Services
         {
             _hostingEnvironment = hostingEnvironment;
         }
-        [Obsolete]
-        public async Task<ErrorOr<ResponseFileUploaded>> DeleteFile(string path)
-        {
-            await Task.CompletedTask;
-            if (path != null)
-            {
-                try
-                {
-                    var fullPath = $"{_hostingEnvironment.WebRootPath}{path}";
-                    File.Delete(fullPath);
-                    return new ResponseFileUploaded("xxxxx", true, "Deleted Done.");
+        //[Obsolete]
+        //public async Task<ErrorOr<ResponseFileUploaded>> DeleteFile(string path)
+        //{
+        //    await Task.CompletedTask;
+        //    if (path != null)
+        //    {
+        //        try
+        //        {
+        //            var fullPath = $"{_hostingEnvironment.WebRootPath}{path}";
+        //            File.Delete(fullPath);
+        //            return new ResponseFileUploaded("xxxxx", true, "Deleted Done.");
 
-                }
-                catch (Exception)
-                {
-                    return Error.Failure(code: "Failure", description: "Failure TO Delete File");
-                }
-            }
-            else
-            {
-                return Error.NotFound(code: "Not.Found", description: "Not Found Any File");
-            }
-        }
+        //        }
+        //        catch (Exception)
+        //        {
+        //            return Error.Failure(code: "Failure", description: "Failure TO Delete File");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return Error.NotFound(code: "Not.Found", description: "Not Found Any File");
+        //    }
+        //}
 
         [Obsolete]
         public async Task<string> UploadFile(byte[] file, string fileName, bool deleteOldFiles = false)
@@ -99,12 +100,14 @@ namespace Gproject.Infrastruct.Services
             }
         }
         [Obsolete]
-        public async Task<ErrorOr<ResponseFileUploaded>> UploadFiles(string path, List<IFormFile> files, bool deleteOldFiles = false)
+        public async Task<string[]> UploadFiles(byte[][]files, string []fileName, bool deleteOldFiles = false)
         {
             if (files != null && files.Count() > 0)
             {
                 try
                 {
+                    Random rnd = new Random();
+                    var path = Path.Combine("Uploads", "Test", $"Test_{DateTime.Now.Year}_{DateTime.Now.Month}_{DateTime.Now.Day}_{DateTime.Now.Second}_{rnd.Next(9000)}");
                     if (!Directory.Exists($"{_hostingEnvironment.WebRootPath}\\{path}"))
                     {
                         Directory.CreateDirectory($"{_hostingEnvironment.WebRootPath}\\{path}");
@@ -118,28 +121,28 @@ namespace Gproject.Infrastruct.Services
                         }
 
                     }
-                    List<string> newFullPaths = new List<string>();
-                    foreach (var file in files)
+                    string[] myStringArray = new string[0];
+                    for (int i = 0; i < files.Length; i++)
                     {
-
-                        using (FileStream filestream = File.Create($"{_hostingEnvironment.WebRootPath}\\{path}\\{file.FileName}"))
+                        using (FileStream filestream = File.Create($"{_hostingEnvironment.WebRootPath}\\{path}\\{fileName[i]}"))
                         {
-                            await file.CopyToAsync(filestream);
-                            await filestream.FlushAsync();
-                            var newFullPath = $"\\{path}\\{file.FileName}";
-                            newFullPaths.Add(newFullPath);
+
+                            await filestream.WriteAsync(files[i]);
+                            var newFullPath = $"\\{path}\\{fileName[i]}";
+                            Array.Resize(ref myStringArray, myStringArray.Length + 1);
+                            myStringArray[myStringArray.Length - 1] = newFullPath;
                         }
                     }
-                    return new ResponseFileUploaded("xxxxx",true, "Uploaded All Done.");
+                    return myStringArray;
                 }
                 catch (Exception)
                 {
-                    return Error.Failure(code: "Failure", description: "Failure To Upload Files");
+                    return null;
                 }
             }
             else
             {
-                return Error.NotFound(code: "Not.Found", description: "Not Found Any Files");
+                return null;
             }
         }
     }
