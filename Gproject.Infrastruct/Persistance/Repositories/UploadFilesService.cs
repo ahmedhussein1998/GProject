@@ -52,17 +52,29 @@ namespace Gproject.Infrastruct.Services
                 try
                 {
                     Random rnd = new Random();
-                    var path = $"\\Uploads\\Test\\Test_{DateTime.Now.Year}_{DateTime.Now.Month}_{DateTime.Now.Day}_{DateTime.Now.Second}_{rnd.Next(9000)}";
+                    var path = Path.Combine("Uploads", "Test", $"Test_{DateTime.Now.Year}_{DateTime.Now.Month}_{DateTime.Now.Day}_{DateTime.Now.Second}_{rnd.Next(9000)}");
 
-                    if (!Directory.Exists($"{_hostingEnvironment.WebRootPath}\\{path}"))
+                    if (string.IsNullOrWhiteSpace(_hostingEnvironment.WebRootPath))
                     {
-                        Directory.CreateDirectory($"{_hostingEnvironment.WebRootPath}\\{path}");
+                        _hostingEnvironment.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+                    }
+
+                    var fullPath = Path.Combine(_hostingEnvironment.WebRootPath, path);
+
+                    //if (!Directory.Exists($"{_hostingEnvironment.WebRootPath}\\{path}"))
+                    //{
+                    //    Directory.CreateDirectory($"{_hostingEnvironment.WebRootPath}\\{path}");
+                    //}
+
+                    if (!Directory.Exists(fullPath))
+                    {
+                        Directory.CreateDirectory(fullPath);
                     }
                     else
                     {
                         if (deleteOldFiles)
                         {
-                            Array.ForEach(Directory.GetFiles($"{_hostingEnvironment.WebRootPath}\\{path}"),
+                            Array.ForEach(Directory.GetFiles(fullPath),
                                     delegate (string filePath) { File.Delete(filePath); });
                         }
                     }
@@ -70,11 +82,11 @@ namespace Gproject.Infrastruct.Services
                     var savedName = $"{Guid.NewGuid()}{DateTime.Now.ToString("dd-MM-yyyy")}{Path.GetExtension(fileName)}";
 
 
-                    await using var fileStream = File.Create(path);
+                    await using var fileStream = File.Create(Path.Combine(fullPath, savedName));
                     await fileStream.WriteAsync(file);
 
                     return savedName;
-                    
+
                 }
                 catch (Exception)
                 {

@@ -20,6 +20,8 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastruct(this IServiceCollection service,
         ConfigurationManager configuration)
     {
+
+
         service.AddAuth(configuration).AddPresistance(configuration);
         service.AddSingleton<IDataTimeProvider, DataTimeProvider>();
         service.AddScoped<IUploadFilesService, UploadFilesService>();

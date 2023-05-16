@@ -13,7 +13,8 @@ namespace Gproject.Api.Common.Mapping
             config.NewConfig<FileDtoRequest, UploadFileCommand>()
                 .Map(dest => dest.size, src => (double)src.File.Length / (1024.00 * 1024.00))
                 .Map(dest => dest.displayName, src => src.File.FileName)
-                .Map(dest => dest.contentType, src => Path.GetExtension(src.File.ContentType))
+                .Map(dest => dest.contentType, src => src.File.ContentType)
+                .Map(dest => dest.extension, src => Path.GetExtension(src.File.FileName))
                 .Map(dest => dest.attachment, src => GetFileBytes(src.File));
 
 

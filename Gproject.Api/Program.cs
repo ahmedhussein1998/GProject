@@ -25,6 +25,8 @@ builder.Services.AddPresentation()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+
 #region Localization
 
 builder.Services.AddControllersWithViews();
