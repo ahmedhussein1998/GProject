@@ -13,7 +13,6 @@ namespace Gproject.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [AllowAnonymous]
     public class UploadController : ApiController
     {
         private readonly IUploadFilesService _filesService;
@@ -43,6 +42,7 @@ namespace Gproject.Api.Controllers
                 );
         }
 
+        [NonAction]
         public byte[][] ConvertFilesToByteArrayArray(IList<IFormFile> files)
         {
             var byteArrayArray = new byte[files.Count][];

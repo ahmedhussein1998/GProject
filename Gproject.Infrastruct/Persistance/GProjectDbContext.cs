@@ -1,4 +1,5 @@
 ﻿using Gproject.Application.Common.Interfaces.Authentication;
+using Gproject.Domain.AttachmentAggregate;
 using Gproject.Domain.Common.Models;
 using Gproject.Domain.MenuAggregate;
 using Gproject.Domain.MenuAggregate.Entities;
@@ -21,6 +22,7 @@ namespace Gproject.Infrastruct.Persistance
             _currentUserService = currentUserService;
         }
         public DbSet<Menu> Menus { get; set; } = null!;
+        public DbSet<Attachment> Attachments { get; set; } = null!;
        
 
         public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)

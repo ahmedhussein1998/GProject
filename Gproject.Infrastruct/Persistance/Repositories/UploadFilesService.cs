@@ -1,6 +1,8 @@
 ﻿using ErrorOr;
 using Gproject.Application.Common.Interfaces.Services;
 using Gproject.Application.Common.Interfaces.Services.Common;
+using Gproject.Domain.AttachmentAggregate;
+using Gproject.Infrastruct.Persistance;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -16,11 +18,21 @@ namespace Gproject.Infrastruct.Services
     {
         [Obsolete]
         private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly GProjectDbContext _context;
+
         [Obsolete]
-        public UploadFilesService(IHostingEnvironment hostingEnvironment)
+        public UploadFilesService(IHostingEnvironment hostingEnvironment, GProjectDbContext context)
         {
             _hostingEnvironment = hostingEnvironment;
+            _context = context;
         }
+
+        public async Task InsertAttachmentInTable(Attachment attachment)
+        {
+            _context.Attachments.Add(attachment);
+            await _context.SaveEntitiesAsync();
+        }
+
         //[Obsolete]
         //public async Task<ErrorOr<ResponseFileUploaded>> DeleteFile(string path)
         //{
@@ -62,10 +74,6 @@ namespace Gproject.Infrastruct.Services
 
                     var fullPath = Path.Combine(_hostingEnvironment.WebRootPath, path);
 
-                    //if (!Directory.Exists($"{_hostingEnvironment.WebRootPath}\\{path}"))
-                    //{
-                    //    Directory.CreateDirectory($"{_hostingEnvironment.WebRootPath}\\{path}");
-                    //}
 
                     if (!Directory.Exists(fullPath))
                     {

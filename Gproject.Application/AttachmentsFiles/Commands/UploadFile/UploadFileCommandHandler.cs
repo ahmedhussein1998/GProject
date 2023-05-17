@@ -1,15 +1,10 @@
 ﻿using ErrorOr;
-using Gproject.Application.Common.Interfaces.Persistance;
-using Gproject.Domain.Common.ValueObjects;
-using Gproject.Domain.HostAggregate.ValueObjects;
-using Gproject.Domain.MenuAggregate;
-using Gproject.Domain.MenuAggregate.Entities;
 using Gproject.Application.Resources;
 using MediatR;
 using Microsoft.Extensions.Localization;
 using Gproject.Application.Common.Interfaces.Services;
 using Gproject.Application.Common.Interfaces.Services.Common;
-using Gproject.Application.AttachmentsFiles.Common;
+using Gproject.Domain.AttachmentAggregate;
 
 namespace Gproject.Application.AttachmentsFiles.Commands.UploadFile
 {
@@ -32,6 +27,11 @@ namespace Gproject.Application.AttachmentsFiles.Commands.UploadFile
             var UploadedFileName = await _filesService.UploadFile(request.attachment, request.displayName);
             if (UploadedFileName != null)
             {
+
+                var attachment = Attachment.Create(UploadedFileName, request.displayName, request.extension,
+                    request.contentType, request.size);
+
+                await _filesService.InsertAttachmentInTable(attachment);
                 // insert in attachment table 
                 return new ResultFileUpload(UploadedFileName);
             }

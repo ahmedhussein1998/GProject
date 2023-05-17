@@ -10,4 +10,9 @@
     <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="7.0.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="AttachmentAggregate\Entities\" />
+    <Folder Include="AttachmentAggregate\ValueObjects\" />
+  </ItemGroup>
+
 </Project>
