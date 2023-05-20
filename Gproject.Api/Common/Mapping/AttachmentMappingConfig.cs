@@ -1,5 +1,6 @@
 ﻿
 using Gproject.Application.AttachmentsFiles.Commands.UploadFile;
+using Gproject.Application.AttachmentsFiles.Commands.UploadFiles;
 using Gproject.Application.Common.Interfaces.Services.Common;
 using Gproject.contracts.UploadFIle;
 using Mapster;
@@ -11,20 +12,9 @@ namespace Gproject.Api.Common.Mapping
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<FileDtoRequest, UploadFileCommand>()
-                .Map(dest => dest.size, src => (double)src.File.Length / (1024.00 * 1024.00))
-                .Map(dest => dest.displayName, src => src.File.FileName)
-                .Map(dest => dest.contentType, src => src.File.ContentType)
-                .Map(dest => dest.extension, src => Path.GetExtension(src.File.FileName))
-                .Map(dest => dest.attachment, src => GetFileBytes(src.File));
-
+                .Map(dest => dest.attachment, src => src.attachment);
+            //config.NewConfig<UploadFilesRequest, UploadFilesCommand>();
         }
 
-
-        public static byte[] GetFileBytes(IFormFile file)
-        {
-            using var ms = new MemoryStream();
-            file.CopyTo(ms);
-            return ms.ToArray();
-        } 
     }
 }

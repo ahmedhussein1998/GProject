@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace Gproject.Application.AttachmentsFiles.Common
 {
-    public record ResultFilesUpload(string[] FilesPath);
+    public record ResultFileRemove(bool Deleted);
 }

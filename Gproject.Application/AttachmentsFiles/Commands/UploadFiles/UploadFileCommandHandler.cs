@@ -10,6 +10,7 @@ using Microsoft.Extensions.Localization;
 using Gproject.Application.Common.Interfaces.Services;
 using Gproject.Application.Common.Interfaces.Services.Common;
 using Gproject.Application.AttachmentsFiles.Common;
+using Gproject.Domain.AttachmentAggregate;
 
 namespace Gproject.Application.AttachmentsFiles.Commands.UploadFiles
 {
@@ -29,11 +30,31 @@ namespace Gproject.Application.AttachmentsFiles.Commands.UploadFiles
             //await Task.CompletedTask;
            
            
-                var UploadedFilesName = await _filesService.UploadFiles(request.attachment, request.displayName);
+                var UploadedFilesName = await _filesService.UploadFiles(request.attachment);
                 if (UploadedFilesName != null)
                 {
-                    // insert in attachment table 
-                    return new ResultFilesUpload(UploadedFilesName);
+                // insert in attachment table
+                    for (int i = 0; i < request.attachment.Count; i++)
+                    {
+                        var attachment = Attachment.Create(request.attachment[i].FileName, Path.GetFileNameWithoutExtension(request.attachment[i].FileName),
+                                                           Path.GetExtension(request.attachment[i].FileName),
+                                                           request.attachment[i].ContentType, request.attachment[i].Length, UploadedFilesName[i]);
+                        await _filesService.InsertAttachmentInTable(attachment);
+                    }
+                    for (int i = 0; i < UploadedFilesName.Length; i++)
+                    {
+                        if (UploadedFilesName[i] != null)
+                        {
+                            if (UploadedFilesName[i].StartsWith("\\"))
+                            {
+                                if (!string.IsNullOrEmpty(UploadedFilesName[i]))
+                                {
+                                    UploadedFilesName[i] = request.ServerRootPath + UploadedFilesName[i].Replace('\\', '/');
+                                }
+                            }
+                        }
+                    }
+                return new ResultFilesUpload(UploadedFilesName);
                 }
                 else
                 {

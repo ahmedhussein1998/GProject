@@ -26,39 +26,57 @@ namespace Gproject.Infrastruct.Services
             _hostingEnvironment = hostingEnvironment;
             _context = context;
         }
+        private static byte[] GetFileBytes(IFormFile file)
+        {
+            using var ms = new MemoryStream();
+            file.CopyTo(ms);
+            return ms.ToArray();
+        }
 
         public async Task InsertAttachmentInTable(Attachment attachment)
         {
             _context.Attachments.Add(attachment);
             await _context.SaveEntitiesAsync();
         }
+        public async Task RemoveFileFormTable(Guid Id)
+        {
+            var File = _context.Attachments.FirstOrDefault(x => x.Id == Id);
+            _context.Attachments.Remove(File);
+            await _context.SaveEntitiesAsync();
+        }
 
-        //[Obsolete]
-        //public async Task<ErrorOr<ResponseFileUploaded>> DeleteFile(string path)
-        //{
-        //    await Task.CompletedTask;
-        //    if (path != null)
-        //    {
-        //        try
-        //        {
-        //            var fullPath = $"{_hostingEnvironment.WebRootPath}{path}";
-        //            File.Delete(fullPath);
-        //            return new ResponseFileUploaded("xxxxx", true, "Deleted Done.");
-
-        //        }
-        //        catch (Exception)
-        //        {
-        //            return Error.Failure(code: "Failure", description: "Failure TO Delete File");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return Error.NotFound(code: "Not.Found", description: "Not Found Any File");
-        //    }
-        //}
+        public async Task<Attachment> GetFileAttachment(Guid Id)
+        {
+            await Task.CompletedTask;
+            var File = _context.Attachments.FirstOrDefault(x => x.Id == Id);
+            return File;
+        }
 
         [Obsolete]
-        public async Task<string> UploadFile(byte[] file, string fileName, bool deleteOldFiles = false)
+        public async Task<bool> DeleteFilePhysical(string path)
+        {
+            await Task.CompletedTask;
+            if (path != null)
+            {
+                try
+                {
+                    var fullPath = $"{_hostingEnvironment.WebRootPath}{path}";
+                    File.Delete(fullPath);
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        [Obsolete]
+        public async Task<string> UploadFile(IFormFile file, bool deleteOldFiles = false)
         {
             if (file != null)
             {
@@ -88,13 +106,14 @@ namespace Gproject.Infrastruct.Services
                         }
                     }
 
-                    var savedName = $"{Guid.NewGuid()}{DateTime.Now.ToString("dd-MM-yyyy")}{Path.GetExtension(fileName)}";
+                    //var savedName = $"{Guid.NewGuid()}{DateTime.Now.ToString("dd-MM-yyyy")}{Path.GetExtension(file.FileName)}";
 
+                    var fileByte = GetFileBytes(file);
+                    var newFullPath = $"\\{path}\\{file.FileName}";
+                    await using var fileStream = File.Create(Path.Combine(fullPath, file.FileName));
+                    await fileStream.WriteAsync(fileByte);
 
-                    await using var fileStream = File.Create(Path.Combine(fullPath, savedName));
-                    await fileStream.WriteAsync(file);
-
-                    return savedName;
+                    return newFullPath;
 
                 }
                 catch (Exception)
@@ -108,7 +127,7 @@ namespace Gproject.Infrastruct.Services
             }
         }
         [Obsolete]
-        public async Task<string[]> UploadFiles(byte[][]files, string []fileName, bool deleteOldFiles = false)
+        public async Task<string[]> UploadFiles(IList<IFormFile> files, bool deleteOldFiles = false)
         {
             if (files != null && files.Count() > 0)
             {
@@ -130,13 +149,13 @@ namespace Gproject.Infrastruct.Services
 
                     }
                     string[] myStringArray = new string[0];
-                    for (int i = 0; i < files.Length; i++)
+                    for (int i = 0; i < files.Count; i++)
                     {
-                        using (FileStream filestream = File.Create($"{_hostingEnvironment.WebRootPath}\\{path}\\{fileName[i]}"))
+                        using (FileStream filestream = File.Create($"{_hostingEnvironment.WebRootPath}\\{path}\\{files[i].FileName}"))
                         {
-
-                            await filestream.WriteAsync(files[i]);
-                            var newFullPath = $"\\{path}\\{fileName[i]}";
+                            var file = GetFileBytes(files[i]);
+                            await filestream.WriteAsync(file);
+                            var newFullPath = $"\\{path}\\{files[i].FileName}";
                             Array.Resize(ref myStringArray, myStringArray.Length + 1);
                             myStringArray[myStringArray.Length - 1] = newFullPath;
                         }

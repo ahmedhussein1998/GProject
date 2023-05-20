@@ -120,6 +120,9 @@
   <data name="DublicateEmail" xml:space="preserve">
     <value>هذه الايميل مستخدم من قبل .</value>
   </data>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>هذه الملف غير متوفر</value>
+  </data>
   <data name="InvalidCredintal" xml:space="preserve">
     <value>خطا فى اسم المسستخدم او كلمة المرور</value>
   </data>

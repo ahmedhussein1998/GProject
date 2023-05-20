@@ -24,15 +24,24 @@ namespace Gproject.Application.AttachmentsFiles.Commands.UploadFile
             //await Task.CompletedTask;
            
            
-            var UploadedFileName = await _filesService.UploadFile(request.attachment, request.displayName);
+            var UploadedFileName = await _filesService.UploadFile(request.attachment);
             if (UploadedFileName != null)
             {
 
-                var attachment = Attachment.Create(UploadedFileName, request.displayName, request.extension,
-                    request.contentType, request.size);
+                var attachment = Attachment.Create(request.attachment.FileName, Path.GetFileNameWithoutExtension(request.attachment.FileName), Path.GetExtension(request.attachment.FileName),
+                    request.attachment.ContentType, request.attachment.Length, UploadedFileName);
 
-                await _filesService.InsertAttachmentInTable(attachment);
                 // insert in attachment table 
+                await _filesService.InsertAttachmentInTable(attachment);
+
+                if (UploadedFileName.StartsWith("\\"))
+                {
+                    if (!string.IsNullOrEmpty(UploadedFileName))
+                    {
+                        UploadedFileName = request.ServerRootPath + UploadedFileName.Replace('\\', '/');
+                    }
+
+                }
                 return new ResultFileUpload(UploadedFileName);
             }
             else

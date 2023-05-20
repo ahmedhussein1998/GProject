@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gproject.Application.AttachmentsFiles.Common
+namespace Gproject.contracts.UploadFIle
 {
-    public record ResultFilesUpload(string[] FilesPath);
+    public record ResponseFilesDeleted(bool Deleted);
 }

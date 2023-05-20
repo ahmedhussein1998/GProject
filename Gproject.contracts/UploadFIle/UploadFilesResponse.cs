@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace Gproject.contracts.UploadFIle
 {
-    public record ResponseFilesUpload(string[] SavedName);
+    public record ResponseFilesUpload(string[] FilesPath);
 
 }

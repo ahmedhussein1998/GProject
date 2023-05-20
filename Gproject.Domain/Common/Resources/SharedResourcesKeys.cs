@@ -10,5 +10,6 @@ namespace Gproject.Domain.Common.Resources
     {
         public const string DublicateEmail = "DublicateEmail";
         public const string InvalidCredintal = "InvalidCredintal";
+        public const string FileNotFound = "FileNotFound";
     }
 }

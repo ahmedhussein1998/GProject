@@ -8,7 +8,7 @@ namespace Gproject.contracts.UploadFIle
     {
         [AllowedExtensions(new string[] { ".jpg", ".png", ".jpeg", ".gif", ".avif" })]
         [MaxFileSize(3 * 1024 * 1024)]
-        public IFormFile File { get; init; }
+        public IFormFile attachment { get; init; }
     }
 
 

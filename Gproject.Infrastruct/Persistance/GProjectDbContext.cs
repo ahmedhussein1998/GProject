@@ -27,6 +27,8 @@ namespace Gproject.Infrastruct.Persistance
 
         public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
         {
+            await Task.CompletedTask;
+
             foreach (var entry in ChangeTracker.Entries<AuditableEntity<Guid>>())
                 switch (entry.State)
                 {
@@ -41,7 +43,7 @@ namespace Gproject.Infrastruct.Persistance
                         break;
                 }
 
-
+            
             var result =  base.SaveChanges();
 
             return  result > 0;

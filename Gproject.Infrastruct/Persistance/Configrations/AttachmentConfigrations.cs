@@ -42,7 +42,8 @@ namespace Gproject.Infrastruct.Persistance.Configrations
             builder.Property(a => a.Size)
                .HasColumnType("decimal(19,4)")
                .IsRequired();
-
+            builder.Property(a => a.PathSaved)
+                .IsRequired();
         }
     }
 }

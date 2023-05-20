@@ -12,12 +12,12 @@ namespace Gproject.Application.Common.Interfaces.Services
 {
     public interface IUploadFilesService
     {
-        Task<string> UploadFile(byte[] file, string fileName, bool deleteOldFiles = false);
-
+        Task<string> UploadFile(IFormFile file, bool deleteOldFiles = false);
         Task InsertAttachmentInTable(Attachment attachment);
-
-        Task<string[]> UploadFiles(byte[][] files, string[] fileName, bool deleteOldFiles = false);
-        //Task<ErrorOr<ResponseFileUploaded>> DeleteFile(string path);
+        Task RemoveFileFormTable(Guid Id);
+        Task<string[]> UploadFiles(IList<IFormFile> files, bool deleteOldFiles = false);
+        Task<Attachment>? GetFileAttachment(Guid Id);
+        Task<bool> DeleteFilePhysical(string path);
     }
 
 }
