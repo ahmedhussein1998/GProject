@@ -13,6 +13,7 @@ namespace Gproject.Application.AttachmentsFiles.Commands.UploadFiles
     {
         public UploadFilesCommandValidator()
         {
+            RuleFor(f => f.attachment).NotEmpty();
         }
     }
 }
