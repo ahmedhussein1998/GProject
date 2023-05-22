@@ -10,8 +10,24 @@ using System.Threading.Tasks;
 namespace Gproject.Application.Authentication.Commands.Register
 {
     public record RegisterCommand(
-         string FirstName,
-         string LastName,
+         string? FirstName,
+         string? SecondName,
+         string? ThirdName,
+         string? LastName,
          string Email,
+         string? Number,
+         string? CountryPrefix,
+         string? GenderCode,
+         string? GenderDescriptionAr,
+         string? GenderDescriptionEn,
+         string? NationalityCode,
+         string? NationalityDescriptionAr,
+         string? NationalityDescriptionEn,
+         string? PictureFileName,
          string Password) :IRequest<ErrorOr<AuthenticationResult>>;
+
+
+    
+
+   
 }

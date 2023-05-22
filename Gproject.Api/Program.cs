@@ -1,17 +1,11 @@
 using Gproject.Api;
-using Gproject.Api.Common.Mapping;
-using Gproject.Api.Errors;
-using Gproject.Api.Filter;
-using Gproject.Api.Midleware;
+using Gproject.Domain.MenuAggregate;
 using Gproject.Infrastruct;
+using Gproject.Infrastruct.Persistance;
 using GProject.Application;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.Options;
-using Microsoft.OpenApi.Models;
 using System.Globalization;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 

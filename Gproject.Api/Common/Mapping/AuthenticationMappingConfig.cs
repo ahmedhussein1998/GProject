@@ -16,7 +16,7 @@ namespace Gproject.Api.Common.Mapping
 
             config.NewConfig<AuthenticationResult, AuthenticationResponse>()
                 .Map(dest => dest.Token, src => src.Token)
-                .Map(dest => dest, src => src.user);
+                .Map(dest => dest, src => src.user);   
         }
     }
 }

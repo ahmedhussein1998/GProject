@@ -1,15 +1,10 @@
-﻿using Gproject.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Gproject.Domain.UserAggregate;
 
 namespace Gproject.Application.Common.Interfaces.Authentication;
 
-    public interface IJwtTokenGenerator
+public interface IJwtTokenGenerator
     {
-        string GenerateToken(User user);
+        string GenerateToken(ApplicationUser user);
     }
 
  

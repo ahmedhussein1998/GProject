@@ -4,6 +4,7 @@ using Gproject.Infrastruct.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gproject.Infrastruct.Migrations
 {
     [DbContext(typeof(GProjectDbContext))]
-    partial class GProjectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230521120807_UsersTables")]
+    partial class UsersTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,6 +87,74 @@ namespace Gproject.Infrastruct.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Attachments", (string)null);
+                });
+
+            modelBuilder.Entity("Gproject.Domain.MenuAggregate.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PictureFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("Users", "security");
                 });
 
             modelBuilder.Entity("Gproject.Domain.MenuAggregate.Entities.MenuItem", b =>
@@ -209,74 +279,6 @@ namespace Gproject.Infrastruct.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Menus", (string)null);
-                });
-
-            modelBuilder.Entity("Gproject.Domain.UserAggregate.ApplicationUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("PictureFileName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("Users", "security");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -410,6 +412,129 @@ namespace Gproject.Infrastruct.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("UserTokens", "security");
+                });
+
+            modelBuilder.Entity("Gproject.Domain.MenuAggregate.ApplicationUser", b =>
+                {
+                    b.OwnsOne("Gproject.Domain.Common.ValueObjects.CellPhone", "Phone", b1 =>
+                        {
+                            b1.Property<string>("ApplicationUserId")
+                                .HasColumnType("nvarchar(450)");
+
+                            b1.Property<string>("CountryPrefix")
+                                .HasMaxLength(5)
+                                .HasColumnType("nvarchar(5)")
+                                .HasColumnName("Phone Country Prefix");
+
+                            b1.Property<string>("Number")
+                                .HasMaxLength(10)
+                                .HasColumnType("nvarchar(10)")
+                                .HasColumnName("Phone Number");
+
+                            b1.HasKey("ApplicationUserId");
+
+                            b1.ToTable("Users", "security");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ApplicationUserId");
+                        });
+
+                    b.OwnsOne("Gproject.Domain.Common.ValueObjects.FullName", "FullName", b1 =>
+                        {
+                            b1.Property<string>("ApplicationUserId")
+                                .HasColumnType("nvarchar(450)");
+
+                            b1.Property<string>("FirstName")
+                                .IsRequired()
+                                .HasMaxLength(30)
+                                .HasColumnType("nvarchar(30)")
+                                .HasColumnName("First Name");
+
+                            b1.Property<string>("LastName")
+                                .IsRequired()
+                                .HasMaxLength(30)
+                                .HasColumnType("nvarchar(30)")
+                                .HasColumnName("Last Name");
+
+                            b1.Property<string>("SecondName")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("ThirdName")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("ApplicationUserId");
+
+                            b1.ToTable("Users", "security");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ApplicationUserId");
+                        });
+
+                    b.OwnsOne("Gproject.Domain.Common.ValueObjects.KeyValueLocalized", "Gender", b1 =>
+                        {
+                            b1.Property<string>("ApplicationUserId")
+                                .HasColumnType("nvarchar(450)");
+
+                            b1.Property<string>("Code")
+                                .IsRequired()
+                                .HasMaxLength(20)
+                                .HasColumnType("nvarchar(20)")
+                                .HasColumnName("GenderCode");
+
+                            b1.Property<string>("DescriptionAr")
+                                .HasMaxLength(10)
+                                .HasColumnType("nvarchar(10)")
+                                .HasColumnName("GenderNameAr");
+
+                            b1.Property<string>("DescriptionEn")
+                                .HasMaxLength(10)
+                                .HasColumnType("nvarchar(10)")
+                                .HasColumnName("GenderNameEn");
+
+                            b1.HasKey("ApplicationUserId");
+
+                            b1.ToTable("Users", "security");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ApplicationUserId");
+                        });
+
+                    b.OwnsOne("Gproject.Domain.Common.ValueObjects.KeyValueLocalized", "Nationality", b1 =>
+                        {
+                            b1.Property<string>("ApplicationUserId")
+                                .HasColumnType("nvarchar(450)");
+
+                            b1.Property<string>("Code")
+                                .IsRequired()
+                                .HasMaxLength(20)
+                                .HasColumnType("nvarchar(20)")
+                                .HasColumnName("NationalityCode");
+
+                            b1.Property<string>("DescriptionAr")
+                                .HasMaxLength(20)
+                                .HasColumnType("nvarchar(20)")
+                                .HasColumnName("NationalityNameAr");
+
+                            b1.Property<string>("DescriptionEn")
+                                .HasMaxLength(20)
+                                .HasColumnType("nvarchar(20)")
+                                .HasColumnName("NationalityNameEn");
+
+                            b1.HasKey("ApplicationUserId");
+
+                            b1.ToTable("Users", "security");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ApplicationUserId");
+                        });
+
+                    b.Navigation("FullName");
+
+                    b.Navigation("Gender");
+
+                    b.Navigation("Nationality");
+
+                    b.Navigation("Phone");
                 });
 
             modelBuilder.Entity("Gproject.Domain.MenuAggregate.Entities.MenuItem", b =>
@@ -584,129 +709,6 @@ namespace Gproject.Infrastruct.Migrations
                     b.Navigation("Name");
                 });
 
-            modelBuilder.Entity("Gproject.Domain.UserAggregate.ApplicationUser", b =>
-                {
-                    b.OwnsOne("Gproject.Domain.Common.ValueObjects.CellPhone", "Phone", b1 =>
-                        {
-                            b1.Property<string>("ApplicationUserId")
-                                .HasColumnType("nvarchar(450)");
-
-                            b1.Property<string>("CountryPrefix")
-                                .HasMaxLength(5)
-                                .HasColumnType("nvarchar(5)")
-                                .HasColumnName("Phone Country Prefix");
-
-                            b1.Property<string>("Number")
-                                .HasMaxLength(10)
-                                .HasColumnType("nvarchar(10)")
-                                .HasColumnName("Phone Number");
-
-                            b1.HasKey("ApplicationUserId");
-
-                            b1.ToTable("Users", "security");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ApplicationUserId");
-                        });
-
-                    b.OwnsOne("Gproject.Domain.Common.ValueObjects.FullName", "FullName", b1 =>
-                        {
-                            b1.Property<string>("ApplicationUserId")
-                                .HasColumnType("nvarchar(450)");
-
-                            b1.Property<string>("FirstName")
-                                .IsRequired()
-                                .HasMaxLength(30)
-                                .HasColumnType("nvarchar(30)")
-                                .HasColumnName("First Name");
-
-                            b1.Property<string>("LastName")
-                                .IsRequired()
-                                .HasMaxLength(30)
-                                .HasColumnType("nvarchar(30)")
-                                .HasColumnName("Last Name");
-
-                            b1.Property<string>("SecondName")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("ThirdName")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("ApplicationUserId");
-
-                            b1.ToTable("Users", "security");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ApplicationUserId");
-                        });
-
-                    b.OwnsOne("Gproject.Domain.Common.ValueObjects.KeyValueLocalized", "Gender", b1 =>
-                        {
-                            b1.Property<string>("ApplicationUserId")
-                                .HasColumnType("nvarchar(450)");
-
-                            b1.Property<string>("Code")
-                                .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("nvarchar(20)")
-                                .HasColumnName("GenderCode");
-
-                            b1.Property<string>("DescriptionAr")
-                                .HasMaxLength(10)
-                                .HasColumnType("nvarchar(10)")
-                                .HasColumnName("GenderNameAr");
-
-                            b1.Property<string>("DescriptionEn")
-                                .HasMaxLength(10)
-                                .HasColumnType("nvarchar(10)")
-                                .HasColumnName("GenderNameEn");
-
-                            b1.HasKey("ApplicationUserId");
-
-                            b1.ToTable("Users", "security");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ApplicationUserId");
-                        });
-
-                    b.OwnsOne("Gproject.Domain.Common.ValueObjects.KeyValueLocalized", "Nationality", b1 =>
-                        {
-                            b1.Property<string>("ApplicationUserId")
-                                .HasColumnType("nvarchar(450)");
-
-                            b1.Property<string>("Code")
-                                .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("nvarchar(20)")
-                                .HasColumnName("NationalityCode");
-
-                            b1.Property<string>("DescriptionAr")
-                                .HasMaxLength(20)
-                                .HasColumnType("nvarchar(20)")
-                                .HasColumnName("NationalityNameAr");
-
-                            b1.Property<string>("DescriptionEn")
-                                .HasMaxLength(20)
-                                .HasColumnType("nvarchar(20)")
-                                .HasColumnName("NationalityNameEn");
-
-                            b1.HasKey("ApplicationUserId");
-
-                            b1.ToTable("Users", "security");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ApplicationUserId");
-                        });
-
-                    b.Navigation("FullName");
-
-                    b.Navigation("Gender");
-
-                    b.Navigation("Nationality");
-
-                    b.Navigation("Phone");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -718,7 +720,7 @@ namespace Gproject.Infrastruct.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Gproject.Domain.UserAggregate.ApplicationUser", null)
+                    b.HasOne("Gproject.Domain.MenuAggregate.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -727,7 +729,7 @@ namespace Gproject.Infrastruct.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Gproject.Domain.UserAggregate.ApplicationUser", null)
+                    b.HasOne("Gproject.Domain.MenuAggregate.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -742,7 +744,7 @@ namespace Gproject.Infrastruct.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Gproject.Domain.UserAggregate.ApplicationUser", null)
+                    b.HasOne("Gproject.Domain.MenuAggregate.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -751,7 +753,7 @@ namespace Gproject.Infrastruct.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Gproject.Domain.UserAggregate.ApplicationUser", null)
+                    b.HasOne("Gproject.Domain.MenuAggregate.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

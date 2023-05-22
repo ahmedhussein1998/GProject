@@ -12,6 +12,9 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using Gproject.Infrastruct.Persistance.Repositories;
+using Gproject.Domain.MenuAggregate;
+using Microsoft.AspNetCore.Identity;
+using Gproject.Domain.UserAggregate;
 
 namespace Gproject.Infrastruct;
 
@@ -56,6 +59,13 @@ public static class DependencyInjection
                 ValidAudience = jwtSettings.Audience,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret))
             });
+
+
+        service.AddIdentity<ApplicationUser , IdentityRole >()
+           .AddEntityFrameworkStores<GProjectDbContext>()
+           .AddDefaultTokenProviders();
+
+
         return service;
     }
 }

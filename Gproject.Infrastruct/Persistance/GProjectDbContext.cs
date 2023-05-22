@@ -2,18 +2,15 @@
 using Gproject.Domain.AttachmentAggregate;
 using Gproject.Domain.Common.Models;
 using Gproject.Domain.MenuAggregate;
-using Gproject.Domain.MenuAggregate.Entities;
 using Gproject.Infrastruct.Persistance.ExtentionMethods;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Gproject.Domain.UserAggregate;
 
 namespace Gproject.Infrastruct.Persistance
 {
-    public class GProjectDbContext :DbContext
+    public class GProjectDbContext :IdentityDbContext<ApplicationUser>
     {
         private readonly ICurrentUserService _currentUserService;
 
@@ -58,6 +55,20 @@ namespace Gproject.Infrastruct.Persistance
                     entityType.AddSoftDeleteQueryFilter();
 
             base.OnModelCreating(modelbuilder);
+
+
+            modelbuilder.Entity<ApplicationUser>().ToTable("Users", "security");
+            modelbuilder.Entity<IdentityRole>().ToTable("Roles", "security");
+            modelbuilder.Entity<IdentityUserRole<string>>().ToTable("UserRoles", "security");
+            modelbuilder.Entity<IdentityUserClaim<string>>().ToTable("UserClaims", "security");
+            modelbuilder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins", "security");
+            modelbuilder.Entity<IdentityUserClaim<string>>().ToTable("UserClaims", "security");
+            modelbuilder.Entity<IdentityUserToken<string>>().ToTable("UserTokens", "security");
+
+
+
+
+
         }
        
 
