@@ -1,4 +1,5 @@
 ﻿using ErrorOr;
+using Gproject.Application.Authentication.Commands.Logout;
 using Gproject.Application.Authentication.Commands.Register;
 using Gproject.Application.Authentication.Common;
 using Gproject.Application.Authentication.Queries.Login;
@@ -17,15 +18,11 @@ namespace Gproject.Api.Controllers
     [AllowAnonymous]
     public class AuthenticationController : ApiController
     {
-        //private readonly IAuthencationCommandService _commandservice;
-        //private readonly IAuthencationQueriesService _queriesService;
         private readonly ISender _mediator;
         private readonly IMapper _mapper;
 
         public AuthenticationController(IMediator mediator, IMapper mapper, IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
         {
-            //_commandservice = commandservice;
-            //_queriesService = queriesService;
             _mediator = mediator;
             _mapper = mapper;
         }
@@ -52,6 +49,20 @@ namespace Gproject.Api.Controllers
                 errors => Problem(errors)
                 );
            
+        }
+
+
+
+        [HttpPost("Logout")]
+        public async Task<IActionResult> Logout()
+        {
+            LogoutCommand command= new LogoutCommand();
+            ErrorOr<string> authResult = await _mediator.Send(command);
+
+            return authResult.Match(
+                authResult => Ok(authResult),
+               errors => Problem(errors));
+
         }
 
     }

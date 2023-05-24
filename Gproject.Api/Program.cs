@@ -1,8 +1,10 @@
 using Gproject.Api;
 using Gproject.Domain.MenuAggregate;
+using Gproject.Domain.UserAggregate;
 using Gproject.Infrastruct;
 using Gproject.Infrastruct.Persistance;
 using GProject.Application;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
 using System.Globalization;
@@ -57,6 +59,42 @@ var app = builder.Build();
     //app.UseExceptionHandler("/error");
     app.UseSwagger();
     app.UseSwaggerUI();
+
+
+
+    #region Seed_AndPermissionRole
+
+    using var scope = app.Services.CreateScope();
+
+    var services = scope.ServiceProvider;
+    var loggerFactory = services.GetRequiredService<ILoggerProvider>();
+    var logger = loggerFactory.CreateLogger("app");
+
+    try
+    {
+        var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+        await Gproject.Infrastruct.Persistance.Seed.DefaultRoles.SeedAsync(roleManager);
+        await Gproject.Infrastruct.Persistance.Seed.DefaultUsers.SeedBasicUserAsync(userManager);
+        await Gproject.Infrastruct.Persistance.Seed.DefaultUsers.SeedSuperAdminUserAsync(userManager, roleManager);
+
+        logger.LogInformation("Data seeded");
+        logger.LogInformation("Application Started");
+    }
+    catch (System.Exception ex)
+    {
+        logger.LogWarning(ex, "An error occurred while seeding data");
+    }
+
+
+
+    #endregion
+
+
+
+
+
     #region Localization middleware
 
     var options = app.Services.GetService<IOptions<RequestLocalizationOptions>>();

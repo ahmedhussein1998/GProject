@@ -37,7 +37,7 @@ namespace Gproject.Infrastruct.Persistance.Configrations
                 builder.Property(n => n.Number)
                     .IsRequired(false)
                     .HasColumnName("Phone Number")
-                    .HasMaxLength(10);
+                    .HasMaxLength(20);
             });
 
 

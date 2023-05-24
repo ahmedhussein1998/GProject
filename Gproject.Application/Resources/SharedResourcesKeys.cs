@@ -11,5 +11,6 @@ namespace Gproject.Application.Resources
         public const string Required = "Required";
         public const string CreateSuccess = "CreateSuccess";
         public const string DublicateEmail = "DublicateEmail";
+        public const string Logout = "Logout";
     }
 }

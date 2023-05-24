@@ -12,7 +12,8 @@ namespace Gproject.Application.Authentication.Queries.Login
     {
         public LoginQueryValidator()
         {
-            RuleFor(x => x.Email).EmailAddress().NotEmpty();
+            //RuleFor(x => x.Email).EmailAddress().NotEmpty();
+            RuleFor(x => x.Email).NotEmpty();//allow to login by user name or email
             RuleFor(x => x.Password).NotEmpty();
         }
     }

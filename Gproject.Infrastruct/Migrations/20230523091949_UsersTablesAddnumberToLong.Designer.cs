@@ -4,6 +4,7 @@ using Gproject.Infrastruct.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gproject.Infrastruct.Migrations
 {
     [DbContext(typeof(GProjectDbContext))]
-    partial class GProjectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230523091949_UsersTablesAddnumberToLong")]
+    partial class UsersTablesAddnumberToLong
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -597,8 +599,8 @@ namespace Gproject.Infrastruct.Migrations
                                 .HasColumnName("Phone Country Prefix");
 
                             b1.Property<string>("Number")
-                                .HasMaxLength(20)
-                                .HasColumnType("nvarchar(20)")
+                                .HasMaxLength(10)
+                                .HasColumnType("nvarchar(10)")
                                 .HasColumnName("Phone Number");
 
                             b1.HasKey("ApplicationUserId");
