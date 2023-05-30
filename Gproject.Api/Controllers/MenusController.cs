@@ -1,7 +1,9 @@
 ﻿using Gproject.Application.Menus.Commands.CreateMenu;
 using Gproject.contracts.Menus;
+using Gproject.Infrastruct.Services;
 using MapsterMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +21,7 @@ namespace Gproject.Api.Controllers
         }
         [Route("hosts/{hostId}/menus")]
         [HttpPost]
+        [Authorize(Permissions.Menus.Create)]
         public async Task<IActionResult> CreateManu( CreateMenuRequest request)
         {
             

@@ -40,8 +40,8 @@ namespace Gproject.Application.Authentication.Queries.Login
             }
             //2. Password Is Correct
 
-            //var username = new EmailAddressAttribute().IsValid(query.Email) ? _userManager.FindByEmailAsync(query.Email).Result.UserName : query.Email;
-            var username = new EmailAddressAttribute().IsValid(query.Email) ? new MailAddress(query.Email).User : query.Email;
+            var username = new EmailAddressAttribute().IsValid(query.Email) ? _userManager.FindByEmailAsync(query.Email).Result.UserName : query.Email;
+            //var username = new EmailAddressAttribute().IsValid(query.Email) ? new MailAddress(query.Email).User : query.Email;
 
             var result = await _signInManager.PasswordSignInAsync(username, query.Password, query.RememberMe, false);
             if (result.Succeeded)

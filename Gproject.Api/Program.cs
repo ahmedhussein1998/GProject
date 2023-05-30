@@ -1,9 +1,11 @@
 using Gproject.Api;
+using Gproject.Api.Filters;
 using Gproject.Domain.MenuAggregate;
 using Gproject.Domain.UserAggregate;
 using Gproject.Infrastruct;
 using Gproject.Infrastruct.Persistance;
 using GProject.Application;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
@@ -12,6 +14,9 @@ using System.Globalization;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+builder.Services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
+
 builder.Services.AddPresentation()
     .AddApplication()
     .AddInfrastruct(builder.Configuration);
@@ -51,7 +56,7 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 {
-    // app.UseMiddleware<ErrorHandlingMiddelware>();
+    // app.UseMiddleware<ErrorHandlingMiddelware>(); 
     //app.Map("/error", (HttpContext httpContext) => {
     //    Exception? exception = httpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
     //    return Results.Problem();

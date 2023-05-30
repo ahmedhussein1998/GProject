@@ -18,6 +18,15 @@ namespace Gproject.Domain.Common.Errors
                 string localizedString = stringLocalizer[SharedResourcesKeys.DublicateEmail];
                 return Error.Conflict(code: "User.DuplicateEmail", description: localizedString);
             }
+
+            public static Error UserNotFound(IStringLocalizer<SharedResources> stringLocalizer)
+            {
+                string localizedString = stringLocalizer[SharedResourcesKeys.UserNotFound];
+                return Error.Conflict(code: "User.UserNotFound", description: localizedString);
+            }
+
+
+
         }
     }
 }

@@ -35,7 +35,9 @@ public static class DependencyInjection
     {
         service.AddDbContext<GProjectDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
         service.AddScoped<IUserRepositroy, UserRepsitory>();
-        service.AddScoped<IMenuRepository, MenuRepository>();       
+        service.AddScoped<IMenuRepository, MenuRepository>();     
+        
+        service.AddScoped<IPermissionsRepositroy, PermissionsRepositroy>();       
         return service;
     }
         public static IServiceCollection AddAuth(this IServiceCollection service,
@@ -65,6 +67,10 @@ public static class DependencyInjection
            .AddEntityFrameworkStores<GProjectDbContext>()
            .AddDefaultTokenProviders();
 
+        service.Configure<SecurityStampValidatorOptions>(options =>
+        {
+            options.ValidationInterval = TimeSpan.Zero;
+        });
 
         return service;
     }

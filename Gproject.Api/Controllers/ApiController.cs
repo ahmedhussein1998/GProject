@@ -9,7 +9,6 @@ using System.Collections.Generic;
 namespace Gproject.Api.Controllers
 {
     [ApiController]
-    [Authorize]
     public class ApiController : ControllerBase
     {
         private IHttpContextAccessor _httpContextAccessor;

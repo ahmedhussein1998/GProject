@@ -30,12 +30,12 @@ namespace Gproject.Infrastruct.Services
             return allPermissions;
         }
 
-        public static class Products
+        public static class Menus
         {
-            public const string View = "Permissions.Products.View";
-            public const string Create = "Permissions.Products.Create";
-            public const string Edit = "Permissions.Products.Edit";
-            public const string Delete = "Permissions.Products.Delete";
+            public const string View = "Permissions.Menus.View";
+            public const string Create = "Permissions.Menus.Create";
+            public const string Edit = "Permissions.Menus.Edit";
+            public const string Delete = "Permissions.Menus.Delete";
         }
     }
 }

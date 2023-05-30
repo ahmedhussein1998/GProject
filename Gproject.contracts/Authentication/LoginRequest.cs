@@ -8,5 +8,5 @@ namespace Gproject.contracts.Authentication
 {
     public record LoginRequest(
        string Email,
-       string Password);
+       string Password, bool RememberMe);
 }
