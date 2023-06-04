@@ -129,6 +129,9 @@
   <data name="InvalidCredintal" xml:space="preserve">
     <value>خطا فى اسم المسستخدم او كلمة المرور</value>
   </data>
+  <data name="MenuNotFound" xml:space="preserve">
+    <value>قائمه الاسعار غير متوافره </value>
+  </data>
   <data name="RoleIsExists" xml:space="preserve">
     <value>الصلاحيه موجوده من قبل</value>
   </data>

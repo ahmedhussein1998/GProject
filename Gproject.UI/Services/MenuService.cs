@@ -30,7 +30,7 @@
 //            });
 //        }
 
-//        public async Task<T> GetAllMenus<T>(string token)
+//        public async Task<T> GetAllMenuss<T>(string token)
 //        {
 //            return await SendAsync<T>(new ApiRequest()
 //            {

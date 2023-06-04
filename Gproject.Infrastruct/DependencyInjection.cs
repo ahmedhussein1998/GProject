@@ -15,6 +15,9 @@ using Gproject.Infrastruct.Persistance.Repositories;
 using Gproject.Domain.MenuAggregate;
 using Microsoft.AspNetCore.Identity;
 using Gproject.Domain.UserAggregate;
+using Gproject.Infrastruct.Queries.GetAllMenus;
+using MediatR;
+using System.Reflection;
 
 namespace Gproject.Infrastruct;
 
@@ -23,6 +26,14 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastruct(this IServiceCollection service,
         ConfigurationManager configuration)
     {
+
+        var assemblies = new[] {
+                typeof(Menu).Assembly, /*Core*/
+                typeof(GetAllMenusQueryHandler).Assembly,
+                typeof(GProjectDbContext).Assembly
+            };
+
+        service.AddMediatR(Assembly.GetAssembly(typeof(GetAllMenusQueryHandler)));
 
 
         service.AddAuth(configuration).AddPresistance(configuration);

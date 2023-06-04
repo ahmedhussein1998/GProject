@@ -22,7 +22,7 @@ namespace Gproject.Domain.Common.Errors
             public static Error RoleNotFound(IStringLocalizer<SharedResources> stringLocalizer)
             {
                 string localizedString = stringLocalizer[SharedResourcesKeys.RoleNotFound];
-                return Error.Conflict(code: "Role.RoleNotFound", description: localizedString);
+                return Error.NotFound(code: "Role.RoleNotFound", description: localizedString);
             }
 
 

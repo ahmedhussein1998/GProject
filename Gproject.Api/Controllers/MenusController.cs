@@ -1,4 +1,6 @@
 ﻿using Gproject.Application.Menus.Commands.CreateMenu;
+using Gproject.Application.Menus.Queries.GetAllMenus;
+using Gproject.Application.Menus.Queries.GetMenuById;
 using Gproject.contracts.Menus;
 using Gproject.Infrastruct.Services;
 using MapsterMapper;
@@ -32,5 +34,38 @@ namespace Gproject.Api.Controllers
                 errors => Problem(errors)
                 );
         }
+
+        [Route("menus")]
+        [HttpGet]
+        [Authorize(Permissions.Menus.View)]
+        public async Task<IActionResult> GetAllMenus([FromQuery] GetAllMenusQuery query)
+        {
+            var menus = await _mediator.Send(query);
+
+            return menus.Match(
+                menus => Ok(menus),
+                errors => Problem(errors)
+                );
+
+        }
+
+
+        [Route("menu")]
+        [HttpGet]
+        [Authorize(Permissions.Menus.View)]
+        public async Task<IActionResult> GetMenuById([FromQuery] Guid id)
+        {
+            var query = new GetMenuByIdQuery(id);
+            var menu = await _mediator.Send(query);
+
+            return menu.Match(
+                menu => Ok(menu),
+                errors => Problem(errors)
+                );
+
+        }
+
+
+
     }
 }

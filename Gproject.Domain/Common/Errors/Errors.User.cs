@@ -22,7 +22,7 @@ namespace Gproject.Domain.Common.Errors
             public static Error UserNotFound(IStringLocalizer<SharedResources> stringLocalizer)
             {
                 string localizedString = stringLocalizer[SharedResourcesKeys.UserNotFound];
-                return Error.Conflict(code: "User.UserNotFound", description: localizedString);
+                return Error.Failure(code: "User.UserNotFound", description: localizedString);
             }
 
 
