@@ -18,6 +18,7 @@ using Gproject.Domain.UserAggregate;
 using Gproject.Infrastruct.Queries.GetAllMenus;
 using MediatR;
 using System.Reflection;
+using Gproject.Application.Common.Interfaces.Services.Common;
 
 namespace Gproject.Infrastruct;
 
@@ -34,11 +35,12 @@ public static class DependencyInjection
             };
 
         service.AddMediatR(Assembly.GetAssembly(typeof(GetAllMenusQueryHandler)));
-
+        service.Configure<ConnectionSettings>(configuration.GetSection(ConnectionSettings.SectionName));
 
         service.AddAuth(configuration).AddPresistance(configuration);
         service.AddSingleton<IDataTimeProvider, DataTimeProvider>();
         service.AddScoped<IUploadFilesService, UploadFilesService>();
+        service.AddScoped<ISqlConnectionFactory, SqlConnectionFactory>();
         return service;
     }
 
