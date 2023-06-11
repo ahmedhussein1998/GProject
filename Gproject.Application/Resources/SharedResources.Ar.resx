@@ -123,6 +123,9 @@
   <data name="DublicateEmail" xml:space="preserve">
     <value>هذه الايميل مستخدم من قبل .</value>
   </data>
+  <data name="EmailSendSuccess" xml:space="preserve">
+    <value>تم ارسال الايميل بنجاح</value>
+  </data>
   <data name="Logout" xml:space="preserve">
     <value>تم تسجيل الخروج بنجاح</value>
   </data>

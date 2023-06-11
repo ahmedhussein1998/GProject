@@ -123,9 +123,11 @@
   <data name="DublicateEmail" xml:space="preserve">
     <value>Dublicate Email Using Before .</value>
   </data>
+  <data name="EmailSendSuccess" xml:space="preserve">
+    <value>Email Send Success</value>
+  </data>
   <data name="Logout" xml:space="preserve">
     <value>User Logout Success</value>
-    <comment> </comment>
   </data>
   <data name="Required" xml:space="preserve">
     <value>This Feild Is Required</value>

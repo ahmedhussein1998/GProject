@@ -19,6 +19,8 @@ using Gproject.Infrastruct.Queries.GetAllMenus;
 using MediatR;
 using System.Reflection;
 using Gproject.Application.Common.Interfaces.Services.Common;
+using Gproject.Infrastruct.SendEmails;
+using Gproject.Application.Common.Interfaces.Email;
 
 namespace Gproject.Infrastruct;
 
@@ -36,6 +38,7 @@ public static class DependencyInjection
 
         service.AddMediatR(Assembly.GetAssembly(typeof(GetAllMenusQueryHandler)));
         service.Configure<ConnectionSettings>(configuration.GetSection(ConnectionSettings.SectionName));
+        service.Configure<MailSettings>(configuration.GetSection(MailSettings.SectionName));
 
         service.AddAuth(configuration).AddPresistance(configuration);
         service.AddSingleton<IDataTimeProvider, DataTimeProvider>();
@@ -49,6 +52,7 @@ public static class DependencyInjection
         service.AddDbContext<GProjectDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
         service.AddScoped<IUserRepositroy, UserRepsitory>();
         service.AddScoped<IMenuRepository, MenuRepository>();     
+        service.AddTransient<IMailingService, MailingService>();     
         
         service.AddScoped<IPermissionsRepositroy, PermissionsRepositroy>();       
         return service;

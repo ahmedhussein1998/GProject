@@ -37,5 +37,13 @@ namespace Gproject.Infrastruct.Services
             public const string Edit = "Permissions.Menus.Edit";
             public const string Delete = "Permissions.Menus.Delete";
         }
+
+        public static class Emails
+        {
+            public const string View = "Permissions.Emails.View";
+            public const string Create = "Permissions.Emails.Create";
+            public const string Edit = "Permissions.Emails.Edit";
+            public const string Delete = "Permissions.Emails.Delete";
+        }
     }
 }
